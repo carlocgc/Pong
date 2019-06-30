@@ -30,5 +30,14 @@ namespace Pong.Deploy
         }
 
         #endregion
+
+#region Overrides of Game
+
+        protected override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+        }
+
+#endregion
     }
 }

@@ -4,6 +4,7 @@ using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 using Pong.Interfaces.Mediator;
 using Pong.Interfaces.Physics.Colliders;
 using Pong.Interfaces.Physics.Service;
@@ -18,8 +19,6 @@ namespace Pong.Physics.Service
         private readonly IMediator _Mediator;
 
         private List<ICollider> _Colliders;
-
-        private Boolean _Running;
 
         public PhysicsService(IMediator mediator)
         {
@@ -49,7 +48,7 @@ namespace Pong.Physics.Service
         /// <summary> Start physics service </summary>
         public void Start()
         {
-            _Running = true;
+            Enabled = true;
         }
 
         /// <summary>
@@ -60,7 +59,7 @@ namespace Pong.Physics.Service
         /// <returns></returns>
         private Boolean BoxToBoxIntersect(IBoxCollider boxA, IBoxCollider boxB)
         {
-            // TODO Bounding box collision 
+            // TODO Bounding box collision
 
             return false;
         }
@@ -68,7 +67,7 @@ namespace Pong.Physics.Service
         /// <summary> Stop the physics service </summary>
         public void Stop()
         {
-            _Running = false;
+            Enabled = false;
         }
 
         #endregion
@@ -78,9 +77,23 @@ namespace Pong.Physics.Service
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         public void Dispose()
         {
-            _Running = false;
+            Stop();
             _Colliders.Clear();
         }
+
+        #endregion
+
+        #region Implementation of IUpdateable
+
+        public void Update(GameTime gameTime)
+        {
+            
+        }
+
+        public Boolean Enabled { get; private set; }
+        public Int32 UpdateOrder { get; private set; }
+        public event EventHandler<EventArgs> EnabledChanged;
+        public event EventHandler<EventArgs> UpdateOrderChanged;
 
         #endregion
     }

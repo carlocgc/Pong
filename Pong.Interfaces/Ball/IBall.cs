@@ -9,8 +9,10 @@ namespace Pong.Interfaces.Ball
 {
     public interface IBall
     {
+        /// <summary> Reset ball </summary>
         void Reset();
 
+        /// <summary> Start ball behaviour </summary>
         void Start();
     }
 }
