@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pong.Interfaces
+namespace Pong.Interfaces.Core
 {
-    public class Class1
+    interface IBall
     {
     }
 }
