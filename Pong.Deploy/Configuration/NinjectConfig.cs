@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pong.Deploy
+namespace Pong.Deploy.Configuration
 {
-    public class Class1
+    public class NinjectConfig
     {
     }
 }
