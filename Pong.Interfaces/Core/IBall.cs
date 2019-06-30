@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pong.Interfaces.Core
 {
-    interface IBall
+    public interface IBall
     {
     }
 }
