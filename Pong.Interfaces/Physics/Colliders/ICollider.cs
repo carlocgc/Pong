@@ -16,6 +16,11 @@ namespace Pong.Interfaces.Physics.Colliders
         /// <summary> Identifier for the type of collider </summary>
         Int32 Type { get; }
 
-        ICollider Collide(ICollider collider);
+        /// <summary>
+        /// Cause collision behaviour
+        /// </summary>
+        /// <param name="collider"> The collider this object collided with </param>
+        /// <returns></returns>
+        void Collide(ICollider collider);
     }
 }

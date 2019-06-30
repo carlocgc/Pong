@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,9 +10,16 @@ using Pong.Interfaces.Physics.Service;
 
 namespace Pong.Physics.Service
 {
-    public class PhysicsService : IPhysicsService, 
+    /// <summary>
+    /// Basic physics system that check collisions between objects
+    /// </summary>
+    public class PhysicsService : IPhysicsService
     {
-        private IMediator _Mediator;
+        private readonly IMediator _Mediator;
+
+        private List<ICollider> _Colliders;
+
+        private Boolean _Running;
 
         public PhysicsService(IMediator mediator)
         {
@@ -25,7 +33,8 @@ namespace Pong.Physics.Service
         /// <returns></returns>
         public IPhysicsService RegisterCollider(ICollider collider)
         {
-            
+            if (!_Colliders.Contains(collider)) _Colliders.Add(collider);
+            return this;
         }
 
         /// <summary> Deregister a collider from the physics service </summary>
@@ -33,19 +42,33 @@ namespace Pong.Physics.Service
         /// <returns></returns>
         public IPhysicsService DeRegisterCollider(ICollider collider)
         {
-            
+            if (_Colliders.Contains(collider)) _Colliders.Remove(collider);
+            return this;
         }
 
         /// <summary> Start physics service </summary>
         public void Start()
         {
-           
+            _Running = true;
+        }
+
+        /// <summary>
+        /// Calculates if two rectangles collide
+        /// </summary>
+        /// <param name="boxA"></param>
+        /// <param name="boxB"></param>
+        /// <returns></returns>
+        private Boolean BoxToBoxIntersect(IBoxCollider boxA, IBoxCollider boxB)
+        {
+            // TODO Bounding box collision 
+
+            return false;
         }
 
         /// <summary> Stop the physics service </summary>
         public void Stop()
         {
-           
+            _Running = false;
         }
 
         #endregion
@@ -55,7 +78,8 @@ namespace Pong.Physics.Service
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         public void Dispose()
         {
-
+            _Running = false;
+            _Colliders.Clear();
         }
 
         #endregion

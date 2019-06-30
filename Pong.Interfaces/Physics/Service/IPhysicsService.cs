@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using Microsoft.Xna.Framework;
 using Pong.Interfaces.Physics.Colliders;
 
 namespace Pong.Interfaces.Physics.Service
@@ -11,7 +12,7 @@ namespace Pong.Interfaces.Physics.Service
     /// <summary>
     /// Service that will detect collisions between colliders
     /// </summary>
-    public interface IPhysicsService : IDisposable
+    public interface IPhysicsService : IDisposable, IUpdateable
     {
         /// <summary> Register a collider with the physics service </summary>
         /// <param name="collider"></param>
