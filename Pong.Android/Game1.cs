@@ -1,13 +1,14 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Pong.Deploy;
 
 namespace Pong.Android
 {
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class Game1 : DeployGame
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;

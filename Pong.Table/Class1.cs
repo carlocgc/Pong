@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pong.Deploy
+namespace Pong.Table
 {
     public class Class1
     {
