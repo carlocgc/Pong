@@ -14,6 +14,6 @@ namespace Pong.Interfaces.Physics.Colliders
     public interface IBoxCollider : ICollider
     {
         /// <summary> Rectangular bounds of the collider </summary>
-        Vector4 Bounds { get; }
+        Rectangle BoundingRect { get; }
     }
 }

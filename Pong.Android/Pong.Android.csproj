@@ -87,7 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pong.Deploy\Pong.Deploy.csproj">
-      <Project>{7af62f74-544c-452c-a897-f5b9869b00bf}</Project>
+      <Project>{A609603E-1962-4D38-B3D1-D6C99DEB1C3F}</Project>
       <Name>Pong.Deploy</Name>
     </ProjectReference>
   </ItemGroup>
