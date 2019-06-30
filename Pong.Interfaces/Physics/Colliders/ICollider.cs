@@ -13,8 +13,8 @@ namespace Pong.Interfaces.Physics.Colliders
     /// </summary>
     public interface ICollider
     {
-        /// <summary> Identifier for the type of collider </summary>
-        Int32 Type { get; }
+        /// <summary> Bounds of the collider </summary>
+        Rectangle BoundingRect { get; }
 
         /// <summary>
         /// Cause collision behaviour

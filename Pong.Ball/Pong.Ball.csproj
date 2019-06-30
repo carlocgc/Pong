@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Pong.Core\Pong.Core.csproj" />
     <ProjectReference Include="..\Pong.Interfaces\Pong.Interfaces.csproj" />
   </ItemGroup>
 

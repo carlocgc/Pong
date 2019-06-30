@@ -18,7 +18,7 @@ namespace Pong.Physics.Service
     {
         private readonly IMediator _Mediator;
 
-        private List<ICollider> _Colliders;
+        private readonly List<ICollider> _Colliders = new List<ICollider>();
 
         public PhysicsService(IMediator mediator)
         {
@@ -54,10 +54,8 @@ namespace Pong.Physics.Service
         /// <summary>
         /// Calculates if two rectangles collide
         /// </summary>
-        /// <param name="boxA"></param>
-        /// <param name="boxB"></param>
         /// <returns></returns>
-        private Boolean BoxToBoxIntersect(IBoxCollider boxA, IBoxCollider boxB)
+        private Boolean BoxToBoxIntersect(ICollider colA, ICollider colB)
         {
             // TODO Bounding box collision
 

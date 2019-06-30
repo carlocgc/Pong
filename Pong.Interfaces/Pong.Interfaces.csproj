@@ -44,7 +44,6 @@
   <ItemGroup>
     <Compile Include="Ball\IBall.cs" />
     <Compile Include="Mediator\IMediator.cs" />
-    <Compile Include="Physics\Colliders\IBoxCollider.cs" />
     <Compile Include="Physics\Colliders\ICollider.cs" />
     <Compile Include="Physics\Service\IPhysicsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
