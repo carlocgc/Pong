@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Pong.Interfaces.Mediator;
 
-namespace Pong.Mediator
+namespace Pong.Mediation
 {
     /// <summary>
     /// Stores instances of objects and services that can be shared between modules

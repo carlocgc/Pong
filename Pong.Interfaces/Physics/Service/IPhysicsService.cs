@@ -11,7 +11,7 @@ namespace Pong.Interfaces.Physics.Service
     /// <summary>
     /// Service that will detect collisions between colliders
     /// </summary>
-    public interface IPhysicsService
+    public interface IPhysicsService : IDisposable
     {
         /// <summary> Register a collider with the physics service </summary>
         /// <param name="collider"></param>
