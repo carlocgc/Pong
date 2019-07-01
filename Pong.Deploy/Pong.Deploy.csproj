@@ -47,6 +47,22 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Pong.Ball\Pong.Ball.csproj">
+      <Project>{23A2D650-EBE4-4B03-8B08-F5A9A728965F}</Project>
+      <Name>Pong.Ball</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pong.Content\Pong.Content.csproj">
+      <Project>{2638ECC8-BF35-4176-AC38-23713682173B}</Project>
+      <Name>Pong.Content</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pong.Core\Pong.Core.csproj">
+      <Project>{E7922478-A845-4EB2-AD66-1143B8AFE48F}</Project>
+      <Name>Pong.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pong.Graphics\Pong.Graphics.csproj">
+      <Project>{389BB1EC-27DA-45DE-A71F-59063AF46208}</Project>
+      <Name>Pong.Graphics</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Pong.Interfaces\Pong.Interfaces.csproj">
       <Project>{57D8D702-4E9E-4283-B5EF-CAF450C9AF24}</Project>
       <Name>Pong.Interfaces</Name>

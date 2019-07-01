@@ -11,7 +11,7 @@ namespace Pong.Ball.Balls
     /// <summary>
     /// A standard ball
     /// </summary>
-    public class NormalBall : IBall, ICollider, IRenderable
+    public class NormalBall : IBall, ICollider, IDisposable
     {
         /// <summary> The balls texture </summary>
         private readonly Texture2D _Texture;
@@ -46,7 +46,7 @@ namespace Pong.Ball.Balls
         /// <summary> Reset ball </summary>
         public void Reset()
         {
-            
+
         }
 
         /// <summary> Start ball behaviour </summary>
@@ -66,6 +66,30 @@ namespace Pong.Ball.Balls
         {
             spriteBatch.Draw(_Texture, BoundingRect.Location.ToVector2(), Color.White);
         }
+
+        #endregion
+
+        #region IDisposable
+
+        /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
+        public void Dispose()
+        {
+            _Texture?.Dispose();
+        }
+
+        #endregion
+
+        #region Implementation of IUpdateable
+
+        public void Update(GameTime gameTime)
+        {
+
+        }
+
+        public Boolean Enabled => true;
+        public Int32 UpdateOrder { get; }
+        public event EventHandler<EventArgs> EnabledChanged;
+        public event EventHandler<EventArgs> UpdateOrderChanged;
 
         #endregion
     }

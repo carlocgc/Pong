@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Ball\IBall.cs" />
     <Compile Include="Content\IContentService.cs" />
+    <Compile Include="Core\IUpdateService.cs" />
     <Compile Include="Graphics\IRenderable.cs" />
     <Compile Include="Graphics\IRenderService.cs" />
     <Compile Include="Mediator\IMediator.cs" />
@@ -52,7 +53,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Core\" />
     <Folder Include="Enemy\" />
     <Folder Include="Input\" />
     <Folder Include="Player\" />

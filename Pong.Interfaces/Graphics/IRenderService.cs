@@ -10,7 +10,7 @@ namespace Pong.Interfaces.Graphics
     /// <summary>
     /// Adds functionality for drawing registered <see cref="IRenderable"/>s
     /// </summary>
-    public interface IRenderService
+    public interface IRenderService : IUpdateable, IDisposable
     {
         /// <summary> Add a renderable to the render service </summary>
         /// <param name="renderable"></param>

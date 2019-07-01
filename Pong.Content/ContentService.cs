@@ -7,7 +7,7 @@ namespace Pong.Content
     /// <summary>
     /// Content manager wrapper
     /// </summary>
-    public class ContentService : IContentService
+    public class ContentService : IContentService, IDisposable
     {
         private readonly ContentManager _ContentManager;
 
@@ -38,6 +38,16 @@ namespace Pong.Content
         public void Unload()
         {
             _ContentManager.Unload();
+        }
+
+        #endregion
+
+        #region IDisposable
+
+        /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
+        public void Dispose()
+        {
+            
         }
 
         #endregion

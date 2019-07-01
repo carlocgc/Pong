@@ -10,18 +10,13 @@ namespace Pong.Android
     /// </summary>
     public class Game1 : DeployGame
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
 
         public Game1()
         {
-            graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
-
-            graphics.IsFullScreen = true;
-            graphics.PreferredBackBufferWidth = 800;
-            graphics.PreferredBackBufferHeight = 480;
-            graphics.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight;
+            _GraphicsDeviceManager.IsFullScreen = true;
+            _GraphicsDeviceManager.PreferredBackBufferWidth = 800;
+            _GraphicsDeviceManager.PreferredBackBufferHeight = 480;
+            _GraphicsDeviceManager.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight;
         }
 
         /// <summary>
@@ -44,8 +39,6 @@ namespace Pong.Android
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-
             // TODO: use this.Content to load your game content here
         }
 
@@ -65,11 +58,7 @@ namespace Pong.Android
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                Exit();
-
             // TODO: Add your update logic here
-
             base.Update(gameTime);
         }
 
@@ -79,10 +68,7 @@ namespace Pong.Android
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
             // TODO: Add your drawing code here
-
             base.Draw(gameTime);
         }
     }
