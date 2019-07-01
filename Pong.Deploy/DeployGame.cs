@@ -20,7 +20,6 @@ namespace Pong.Deploy
     {
         protected readonly Mediator _Mediator;
         protected readonly GraphicsDeviceManager _GraphicsDeviceManager;
-        protected readonly ContentManager _ContentManager;
 
         protected SpriteBatch _SpriteBatch;
         protected IUpdateService _UpdateService;
@@ -30,13 +29,8 @@ namespace Pong.Deploy
         protected DeployGame()
         {
             _GraphicsDeviceManager = new GraphicsDeviceManager(this);
-            _ContentManager = new ContentManager(Services)
-            {
-                RootDirectory = "Content"
-            };
-
+            Content.RootDirectory = "Content";
             _Mediator = new Mediator();
-
         }
 
         #region Overrides of Game
@@ -46,7 +40,7 @@ namespace Pong.Deploy
             // Initialise services
             _UpdateService = _Mediator.RegisterService<IUpdateService, UpdateService>(new UpdateService());
             _PhysicsService = _Mediator.RegisterService<IPhysicsService, PhysicsService>(new PhysicsService(_Mediator));
-            _ContentService = _Mediator.RegisterService<IContentService, ContentService>(new ContentService(_ContentManager));
+            _ContentService = _Mediator.RegisterService<IContentService, ContentService>(new ContentService(Content));
 
             base.Initialize();
         }

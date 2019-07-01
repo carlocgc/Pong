@@ -11,7 +11,7 @@ namespace Pong.Android
     public class Game1 : DeployGame
     {
 
-        public Game1()
+        public Game1() : base()
         {
             _GraphicsDeviceManager.IsFullScreen = true;
             _GraphicsDeviceManager.PreferredBackBufferWidth = 800;
