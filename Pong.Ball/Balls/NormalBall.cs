@@ -1,21 +1,33 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Pong.Interfaces.Ball;
+using Pong.Interfaces.Content;
+using Pong.Interfaces.Graphics;
 using Pong.Interfaces.Physics.Colliders;
 
 namespace Pong.Ball.Balls
 {
-    public class NormalBall : IBall, ICollider
+    /// <summary>
+    /// A standard ball
+    /// </summary>
+    public class NormalBall : IBall, ICollider, IRenderable
     {
-        public NormalBall() : base()
+        /// <summary> The balls texture </summary>
+        private readonly Texture2D _Texture;
+
+        public Vector2 Position { get; set; }
+
+        public NormalBall(IContentService contentService)
         {
+            _Texture = contentService.Load<Texture2D>(Data.Assets.Ball);
+            Position = new Vector2(200, 200);
         }
 
         #region Implementation of ICollider
 
-
         /// <summary> Rectangular bounds of the collider </summary>
-        public Rectangle BoundingRect { get; }
+        public Rectangle BoundingRect => new Rectangle(Position.ToPoint(), new Point(_Texture.Width, _Texture.Height));
 
         /// <summary>
         /// Cause collision behaviour
@@ -34,13 +46,25 @@ namespace Pong.Ball.Balls
         /// <summary> Reset ball </summary>
         public void Reset()
         {
-         
+            
         }
 
         /// <summary> Start ball behaviour </summary>
         public void Start()
         {
-         
+
+        }
+
+        #endregion
+
+        #region Implementation of IRenderable
+
+        /// <summary> Draws the object to screen </summary>
+        /// <param name="gameTime"></param>
+        /// <param name="spriteBatch"></param>
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(_Texture, BoundingRect.Location.ToVector2(), Color.White);
         }
 
         #endregion
