@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Content;
 using Pong.Interfaces.Content;    
 
-namespace Content.Service
+namespace Pong.Content.Service
 {
     public class ContentService : IContentService
     {
