@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pong.Interfaces.Ball;
 using Pong.Interfaces.Content;
-using Pong.Interfaces.Graphics;
 using Pong.Interfaces.Physics.Colliders;
 
 namespace Pong.Ball.Balls
@@ -11,7 +10,7 @@ namespace Pong.Ball.Balls
     /// <summary>
     /// A standard ball
     /// </summary>
-    public class NormalBall : IBall, ICollider, IDisposable
+    public class NormalBall : IBall, ICollider
     {
         /// <summary> The balls texture </summary>
         private readonly Texture2D _Texture;
