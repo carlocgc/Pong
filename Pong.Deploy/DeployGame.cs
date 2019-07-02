@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pong.Ball.Balls;
 using Pong.Content;
@@ -16,13 +17,14 @@ namespace Pong.Deploy
 {
     public class DeployGame : Game
     {
-        protected readonly Mediator _Mediator;
         protected readonly GraphicsDeviceManager _GraphicsDeviceManager;
+        private readonly Mediator _Mediator;
 
-        protected SpriteBatch _SpriteBatch;
-        protected IUpdateService _UpdateService;
-        protected IPhysicsService _PhysicsService;
-        protected IContentService _ContentService;
+        private SpriteBatch _SpriteBatch;
+        private IUpdateService _UpdateService;
+        private IPhysicsService _PhysicsService;
+        private IContentService _ContentService;
+        private IRenderService _RenderService;
 
         protected DeployGame()
         {
@@ -47,14 +49,13 @@ namespace Pong.Deploy
         {
             _SpriteBatch = new SpriteBatch(GraphicsDevice);
 
-            IRenderService renderService = _Mediator.RegisterService<IRenderService, RenderService>(new RenderService(_SpriteBatch));
+            _RenderService = _Mediator.RegisterService<IRenderService, RenderService>(new RenderService(_SpriteBatch));
             IBall ball = _Mediator.RegisterService<IBall, NormalBall>(new NormalBall(_ContentService));
 
-            _UpdateService.Register(_PhysicsService).
-                Register(renderService).
-                Register(ball);
+            _UpdateService.Register(_PhysicsService);
+            _UpdateService.Register(ball);
 
-            renderService.Register(ball);
+            _RenderService.Register(ball);
 
             base.LoadContent();
         }
@@ -62,6 +63,11 @@ namespace Pong.Deploy
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            _SpriteBatch.Begin();
+            _RenderService.Draw(gameTime, _SpriteBatch);
+            _SpriteBatch.End();
+
             base.Draw(gameTime);
         }
 

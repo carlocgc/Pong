@@ -34,6 +34,14 @@ namespace Pong.Graphics
             if (_Renderables.Contains(renderable)) _Renderables.Remove(renderable);
         }
 
+        /// <summary> Calls draw method on all registered <see cref="IRenderable"/>s </summary>
+        /// <param name="gameTime"></param>
+        /// <param name="spriteBatch"></param>
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            foreach (IRenderable renderable in _Renderables) renderable.Draw(gameTime, spriteBatch);
+        }
+
         #endregion
 
         #region Implementation of IUpdateable

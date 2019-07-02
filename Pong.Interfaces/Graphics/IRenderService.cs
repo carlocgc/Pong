@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Pong.Interfaces.Graphics
 {
@@ -19,5 +16,10 @@ namespace Pong.Interfaces.Graphics
         /// <summary> Remove a renderable from the render service </summary>
         /// <param name="renderable"></param>
         void Deregister(IRenderable renderable);
+
+        /// <summary> Calls draw method on all registered <see cref="IRenderable"/>s </summary>
+        /// <param name="gameTime"></param>
+        /// <param name="spriteBatch"></param>
+        void Draw(GameTime gameTime, SpriteBatch spriteBatch);
     }
 }
