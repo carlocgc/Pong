@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A609603E-1962-4D38-B3D1-D6C99DEB1C3F}</ProjectGuid>
+    <ProjectGuid>{2638ECC8-BF35-4176-AC38-23713682173B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Pong.Deploy</RootNamespace>
-    <AssemblyName>Pong.Deploy</AssemblyName>
+    <RootNamespace>Pong.Content</RootNamespace>
+    <AssemblyName>Pong.Content</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -43,37 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DeployGame.cs" />
+    <Compile Include="ContentService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pong.Ball\Pong.Ball.csproj">
-      <Project>{A477F570-7470-4AA6-8898-6A554585E729}</Project>
-      <Name>Pong.Ball</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pong.Content\Pong.Content.csproj">
-      <Project>{2638ECC8-BF35-4176-AC38-23713682173B}</Project>
-      <Name>Pong.Content</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pong.Core\Pong.Core.csproj">
-      <Project>{E7922478-A845-4EB2-AD66-1143B8AFE48F}</Project>
-      <Name>Pong.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pong.Graphics\Pong.Graphics.csproj">
-      <Project>{389BB1EC-27DA-45DE-A71F-59063AF46208}</Project>
-      <Name>Pong.Graphics</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Pong.Interfaces\Pong.Interfaces.csproj">
       <Project>{57D8D702-4E9E-4283-B5EF-CAF450C9AF24}</Project>
       <Name>Pong.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pong.Mediation\Pong.Mediation.csproj">
-      <Project>{7C6A674E-E8BD-4FDE-A021-10D883AA2EF7}</Project>
-      <Name>Pong.Mediation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pong.Physics\Pong.Physics.csproj">
-      <Project>{D590DADB-F14A-4CEA-9804-56E9DCAEABCC}</Project>
-      <Name>Pong.Physics</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

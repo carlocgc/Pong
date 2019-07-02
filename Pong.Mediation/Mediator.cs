@@ -21,7 +21,7 @@ namespace Pong.Mediation
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T GetService<T>()
+        public T GetInstance<T>()
         {
             return (T) _ServiceCatalog[typeof(T)]; // TODO should be handled better?
         }
@@ -60,7 +60,7 @@ namespace Pong.Mediation
         /// <typeparam name="T"> The identifying type, should be an interface </typeparam>
         /// <param name="creator"> The method by which the type is created, usually a constructor </param>
         /// <returns></returns>
-        public IMediator RegisterFactory<T>(Func<Object> creator)
+        public IMediator RegisterCreator<T>(Func<Object> creator)
         {
             if (_InstanceCatalog.ContainsKey(typeof(T))) _InstanceCatalog.Remove(typeof(T));
             _InstanceCatalog.Add(typeof(T), creator);

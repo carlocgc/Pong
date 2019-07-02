@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Pong.Interfaces</RootNamespace>
     <AssemblyName>Pong.Interfaces</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,13 +44,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ball\IBall.cs" />
+    <Compile Include="Content\IContentService.cs" />
+    <Compile Include="Core\IUpdateService.cs" />
+    <Compile Include="Graphics\IRenderable.cs" />
+    <Compile Include="Graphics\IRenderService.cs" />
     <Compile Include="Mediator\IMediator.cs" />
     <Compile Include="Physics\Colliders\ICollider.cs" />
     <Compile Include="Physics\Service\IPhysicsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Core\" />
     <Folder Include="Enemy\" />
     <Folder Include="Input\" />
     <Folder Include="Player\" />
