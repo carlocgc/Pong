@@ -119,6 +119,5 @@
   </resheader>
   <data name="Ball" xml:space="preserve">
     <value>Graphics/ball</value>
-    <comment>Ball graphic path</comment>
   </data>
 </root>

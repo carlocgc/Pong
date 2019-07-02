@@ -47,10 +47,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pong.Ball\Pong.Ball.csproj">
-      <Project>{23A2D650-EBE4-4B03-8B08-F5A9A728965F}</Project>
-      <Name>Pong.Ball</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Pong.Content\Pong.Content.csproj">
       <Project>{2638ECC8-BF35-4176-AC38-23713682173B}</Project>
       <Name>Pong.Content</Name>
@@ -66,10 +62,6 @@
     <ProjectReference Include="..\Pong.Interfaces\Pong.Interfaces.csproj">
       <Project>{57D8D702-4E9E-4283-B5EF-CAF450C9AF24}</Project>
       <Name>Pong.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pong.Mediator\Pong.Mediation.csproj">
-      <Project>{E7F60A6F-D29E-4469-8D1A-A0FB9F5588EB}</Project>
-      <Name>Pong.Mediation</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pong.Physics\Pong.Physics.csproj">
       <Project>{D590DADB-F14A-4CEA-9804-56E9DCAEABCC}</Project>

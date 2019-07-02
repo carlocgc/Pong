@@ -1,9 +1,9 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pong.Interfaces.Ball;
 using Pong.Interfaces.Content;
 using Pong.Interfaces.Physics.Colliders;
+using System;
 
 namespace Pong.Ball.Balls
 {
