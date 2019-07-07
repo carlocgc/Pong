@@ -47,15 +47,20 @@ namespace Pong.Deploy
 
         protected override void LoadContent()
         {
+
+            Vector2 screenSize = new Vector2(_GraphicsDeviceManager.GraphicsDevice.Viewport.Bounds.Width, _GraphicsDeviceManager.GraphicsDevice.Viewport.Height);
+
             _SpriteBatch = new SpriteBatch(GraphicsDevice);
 
             _RenderService = _Mediator.RegisterService<IRenderService, RenderService>(new RenderService(_SpriteBatch));
-            IBall ball = _Mediator.RegisterService<IBall, NormalBall>(new NormalBall(_ContentService));
-
+            IBall ball = _Mediator.RegisterService<IBall, NormalBall>(new NormalBall(_ContentService, screenSize));
+            
             _UpdateService.Register(_PhysicsService);
             _UpdateService.Register(ball);
 
             _RenderService.Register(ball);
+
+            ball.Start();
 
             base.LoadContent();
         }

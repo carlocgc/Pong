@@ -4,6 +4,10 @@ using Pong.Interfaces.Ball;
 using Pong.Interfaces.Content;
 using Pong.Interfaces.Physics.Colliders;
 using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Runtime.Remoting.Messaging;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Pong.Ball.Balls
 {
@@ -12,15 +16,30 @@ namespace Pong.Ball.Balls
     /// </summary>
     public class NormalBall : IBall, ICollider
     {
+        /// <summary> Random number generator </summary>
+        private readonly Random _Rand = new Random(Environment.TickCount);
         /// <summary> The balls texture </summary>
         private readonly Texture2D _Texture;
+        /// <summary> The size of the game screen, used for edge checking </summary>
+        private readonly Vector2 _ScreenSize;
+        /// <summary> The center of the screen </summary>
+        private readonly Vector2 _StartPosition;
+        /// <summary> The speed the ball is moving </summary>
+        private readonly Single _Speed;
+        /// <summary> Whether the ball is active/moving </summary>
+        private Boolean _Active;
+        /// <summary> THe direction the ball is moving </summary>
+        private Vector2 _Direction;
 
+        /// <summary> The position of the ball </summary>
         public Vector2 Position { get; set; }
 
-        public NormalBall(IContentService contentService)
+        public NormalBall(IContentService contentService, Vector2 screenDimensions)
         {
             _Texture = contentService.Load<Texture2D>(Data.Assets.Ball);
-            Position = new Vector2(200, 200);
+            _ScreenSize = screenDimensions;
+            _Speed = 500;
+            Position = _StartPosition = _ScreenSize / 2; ;
         }
 
         #region Implementation of ICollider
@@ -35,7 +54,7 @@ namespace Pong.Ball.Balls
         /// <returns></returns>
         public void Collide(ICollider collider)
         {
-
+            // TODO Bounce off the collided object
         }
 
         #endregion
@@ -45,13 +64,16 @@ namespace Pong.Ball.Balls
         /// <summary> Reset ball </summary>
         public void Reset()
         {
-
+            // TODO set to start position and stop ball moving
+            _Active = false;
+            Position = _StartPosition;
         }
 
         /// <summary> Start ball behaviour </summary>
         public void Start()
         {
-
+            _Direction = GetRandomDirection();
+            _Active = true;
         }
 
         #endregion
@@ -63,7 +85,7 @@ namespace Pong.Ball.Balls
         /// <param name="spriteBatch"></param>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_Texture, BoundingRect.Location.ToVector2(), Color.White);
+            spriteBatch.Draw(_Texture, Position, Color.White);
         }
 
         #endregion
@@ -78,11 +100,52 @@ namespace Pong.Ball.Balls
 
         #endregion
 
+        /// <summary> Get a random direction as a normalized vector </summary>
+        private Vector2 GetRandomDirection()
+        {
+            return new Vector2((Single)_Rand.NextDouble(), (Single)_Rand.NextDouble());
+        }
+
+        /// <summary>
+        /// returns whether the 
+        /// </summary>
+        /// <param name="objectBounds"></param>
+        /// <param name="screenSize"></param>
+        /// <returns></returns>
+        private void KeepWithinScreen(Rectangle objectBounds, Vector2 screenSize)
+        {
+            Single x = Position.X;
+            Single y = Position.Y;
+            if (objectBounds.X < 0)
+            {
+                x = 0;
+                _Direction = new Vector2(_Direction.X * -1, _Direction.Y);
+            }
+            else if (objectBounds.X + objectBounds.Width > screenSize.X)
+            {
+                x = screenSize.X - objectBounds.Width;
+                _Direction = new Vector2(_Direction.X * -1, _Direction.Y);
+            }
+            if (objectBounds.Y < 0)
+            {
+                y = 0;
+                _Direction = new Vector2(_Direction.X, _Direction.Y * -1);
+            }
+            else if (objectBounds.Y + objectBounds.Height > screenSize.Y)
+            {
+                y = screenSize.Y - objectBounds.Height;
+                _Direction = new Vector2(_Direction.X, _Direction.Y * -1);
+            }
+            Position = new Vector2(x, y);
+        }
+
         #region Implementation of IUpdateable
 
         public void Update(GameTime gameTime)
         {
-
+            if (!_Active) return;
+            Position += _Direction * _Speed * (Single)gameTime.ElapsedGameTime.TotalSeconds;
+            KeepWithinScreen(BoundingRect, _ScreenSize);
         }
 
         public Boolean Enabled => true;
