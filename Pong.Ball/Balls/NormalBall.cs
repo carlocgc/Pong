@@ -5,9 +5,6 @@ using Pong.Interfaces.Content;
 using Pong.Interfaces.Physics.Colliders;
 using System;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Runtime.Remoting.Messaging;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Pong.Ball.Balls
 {
@@ -24,8 +21,12 @@ namespace Pong.Ball.Balls
         private readonly Vector2 _ScreenSize;
         /// <summary> The center of the screen </summary>
         private readonly Vector2 _StartPosition;
-        /// <summary> The speed the ball is moving </summary>
-        private readonly Single _Speed;
+        /// <summary> Min travel speed </summary>
+        private readonly Single _MinSpeed;
+        /// <summary> Max travel speed </summary>
+        private readonly Single _MaxSpeed;
+        /// <summary> Current travel speed </summary>
+        private Single _Speed;
         /// <summary> Whether the ball is active/moving </summary>
         private Boolean _Active;
         /// <summary> THe direction the ball is moving </summary>
@@ -38,7 +39,9 @@ namespace Pong.Ball.Balls
         {
             _Texture = contentService.Load<Texture2D>(Data.Assets.Ball);
             _ScreenSize = screenDimensions;
-            _Speed = 500;
+            _MinSpeed = 500;
+            _MaxSpeed = 1000;
+            _Speed = GetRandomSpeed();
             Position = _StartPosition = _ScreenSize / 2; ;
         }
 
@@ -73,6 +76,7 @@ namespace Pong.Ball.Balls
         public void Start()
         {
             _Direction = GetRandomDirection();
+            _Direction.Normalize();
             _Active = true;
         }
 
@@ -103,7 +107,16 @@ namespace Pong.Ball.Balls
         /// <summary> Get a random direction as a normalized vector </summary>
         private Vector2 GetRandomDirection()
         {
-            return new Vector2((Single)_Rand.NextDouble(), (Single)_Rand.NextDouble());
+            Single x = (Single)_Rand.NextDouble();
+            Single y = (Single)_Rand.NextDouble();
+            return new Vector2(x, y);
+        }
+
+        /// <summary> Gets a random speed between min and max speed</summary>
+        /// <returns></returns>
+        private Single GetRandomSpeed()
+        {
+            return _Rand.Next((Int32)_MinSpeed, (Int32)_MaxSpeed);
         }
 
         /// <summary>
@@ -120,21 +133,25 @@ namespace Pong.Ball.Balls
             {
                 x = 0;
                 _Direction = new Vector2(_Direction.X * -1, _Direction.Y);
+                _Speed = GetRandomSpeed();
             }
             else if (objectBounds.X + objectBounds.Width > screenSize.X)
             {
                 x = screenSize.X - objectBounds.Width;
                 _Direction = new Vector2(_Direction.X * -1, _Direction.Y);
+                _Speed = GetRandomSpeed();
             }
             if (objectBounds.Y < 0)
             {
                 y = 0;
                 _Direction = new Vector2(_Direction.X, _Direction.Y * -1);
+                _Speed = GetRandomSpeed();
             }
             else if (objectBounds.Y + objectBounds.Height > screenSize.Y)
             {
                 y = screenSize.Y - objectBounds.Height;
                 _Direction = new Vector2(_Direction.X, _Direction.Y * -1);
+                _Speed = GetRandomSpeed();
             }
             Position = new Vector2(x, y);
         }

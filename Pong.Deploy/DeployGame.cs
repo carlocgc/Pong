@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pong.Ball.Balls;
 using Pong.Content;
@@ -10,8 +9,10 @@ using Pong.Interfaces.Content;
 using Pong.Interfaces.Core;
 using Pong.Interfaces.Graphics;
 using Pong.Interfaces.Physics.Service;
+using Pong.Interfaces.Table;
 using Pong.Mediation;
 using Pong.Physics.Service;
+using Pong.Table.Tables;
 
 namespace Pong.Deploy
 {
@@ -47,17 +48,19 @@ namespace Pong.Deploy
 
         protected override void LoadContent()
         {
-
             Vector2 screenSize = new Vector2(_GraphicsDeviceManager.GraphicsDevice.Viewport.Bounds.Width, _GraphicsDeviceManager.GraphicsDevice.Viewport.Height);
 
             _SpriteBatch = new SpriteBatch(GraphicsDevice);
 
             _RenderService = _Mediator.RegisterService<IRenderService, RenderService>(new RenderService(_SpriteBatch));
+            ITable table = _Mediator.RegisterService<ITable, NormalTable>(new NormalTable(_ContentService));
             IBall ball = _Mediator.RegisterService<IBall, NormalBall>(new NormalBall(_ContentService, screenSize));
-            
+
             _UpdateService.Register(_PhysicsService);
+            _UpdateService.Register(table);
             _UpdateService.Register(ball);
 
+            _RenderService.Register(table);
             _RenderService.Register(ball);
 
             ball.Start();
@@ -67,7 +70,7 @@ namespace Pong.Deploy
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.DeepPink);
 
             _SpriteBatch.Begin();
             _RenderService.Draw(gameTime, _SpriteBatch);
@@ -79,7 +82,6 @@ namespace Pong.Deploy
         protected override void Update(GameTime gameTime)
         {
             _UpdateService.Update(gameTime);
-
             base.Update(gameTime);
         }
 

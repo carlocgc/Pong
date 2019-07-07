@@ -52,12 +52,12 @@
     <Compile Include="Physics\Colliders\ICollider.cs" />
     <Compile Include="Physics\Service\IPhysicsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Table\ITable.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Enemy\" />
     <Folder Include="Input\" />
     <Folder Include="Player\" />
-    <Folder Include="Table\" />
     <Folder Include="UI\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

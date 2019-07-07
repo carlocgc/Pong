@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Microsoft.Xna.Framework;
 
 namespace Pong.Core.Tweener
 {
@@ -13,7 +14,7 @@ namespace Pong.Core.Tweener
             void Remove(Tween t);
         }
 
-        public class TweenerImpl : IRemoveTweens
+        public class TweenerImpl : IRemoveTweens, IUpdateable
         {
             static TweenerImpl()
             {
@@ -179,18 +180,6 @@ namespace Pong.Core.Tweener
                     var tween = allTweens[i];
                     tween.Resume();
                 }
-            }
-
-            /// <summary>
-            /// Updates the tweener and all objects it contains.
-            /// </summary>
-            /// <param name="secondsElapsed">Seconds elapsed since last update.</param>
-            public void Update(float secondsElapsed)
-            {
-                for (int i = 0; i < allTweens.Count; ++i)
-                    allTweens[i].Update(secondsElapsed);
-
-                AddAndRemove();
             }
 
             private MemberLerper CreateLerper(Type propertyType)
@@ -385,6 +374,27 @@ namespace Pong.Core.Tweener
                     return Convert.ChangeType(value, type);
                 }
             }
+
+            #region Implementation of IUpdateable
+
+            /// <summary>
+            /// Updates the tweener and all objects it contains.
+            /// </summary>
+            /// <param name="secondsElapsed">Seconds elapsed since last update.</param>
+            public void Update(GameTime gameTime)
+            {
+                for (int i = 0; i < allTweens.Count; ++i)
+                    allTweens[i].Update(gameTime.ElapsedGameTime.Seconds);
+
+                AddAndRemove();
+            }
+
+            public Boolean Enabled => true;
+            public Int32 UpdateOrder { get; }
+            public event EventHandler<EventArgs> EnabledChanged;
+            public event EventHandler<EventArgs> UpdateOrderChanged;
+
+            #endregion
         }
     }
 }
