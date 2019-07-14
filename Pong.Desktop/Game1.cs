@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Pong.Deploy;
 
@@ -12,7 +11,8 @@ namespace Pong.Desktop
     {
         public Game1() : base()
         {
-
+            _GraphicsDeviceManager.PreferredBackBufferWidth = 1280;
+            _GraphicsDeviceManager.PreferredBackBufferHeight = 720;
         }
 
         /// <summary>
@@ -24,6 +24,7 @@ namespace Pong.Desktop
         protected override void Initialize()
         {
             // TODO: Add Desktop specific initialization
+
             base.Initialize();
         }
 

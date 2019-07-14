@@ -1,6 +1,6 @@
 using System;
 
-namespace Pong.Core.Tweener
+namespace Pong.Core.Common.Tweener
 {
     /// <summary>
     /// Static class with useful easer functions that can be used by Tweens.

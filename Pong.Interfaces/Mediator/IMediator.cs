@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Pong.Interfaces.Mediator
+﻿namespace Pong.Interfaces.Mediator
 {
     /// <summary>
     /// Adds functionality for mediating between modules

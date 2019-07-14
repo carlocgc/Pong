@@ -1,12 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Pong.Core.Common.States;
+using Pong.Interfaces.Core;
+using Pong.Interfaces.Mediator;
 
 namespace Pong.Core
 {
-    class GameInstance
+    public class GameInstance
     {
+        private readonly IMediator _Mediator;
+
+        public GameInstance(IMediator mediator)
+        {
+            _Mediator = mediator;
+        }
+
+        public void Init()
+        {
+            _Mediator.GetInstance<IStateService>().SetState(new LoadingState(_Mediator));
+        }
     }
 }

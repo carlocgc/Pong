@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Pong.Core.Tweener
+namespace Pong.Core.Common.Tweener
 {
     public partial class Tween
     {

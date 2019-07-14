@@ -4,7 +4,8 @@ using Pong.Interfaces.Ball;
 using Pong.Interfaces.Content;
 using Pong.Interfaces.Physics.Colliders;
 using System;
-using System.ComponentModel;
+using Pong.Interfaces.Core;
+using Pong.Interfaces.Graphics;
 
 namespace Pong.Ball.Balls
 {
@@ -35,14 +36,16 @@ namespace Pong.Ball.Balls
         /// <summary> The position of the ball </summary>
         public Vector2 Position { get; set; }
 
-        public NormalBall(IContentService contentService, Vector2 screenDimensions)
+        public NormalBall(IContentService contentService, IRenderService renderService, IUpdateService updateService, Vector2 screenDimensions)
         {
             _Texture = contentService.Load<Texture2D>(Data.Assets.Ball);
             _ScreenSize = screenDimensions;
             _MinSpeed = 500;
             _MaxSpeed = 1000;
             _Speed = GetRandomSpeed();
-            Position = _StartPosition = _ScreenSize / 2; ;
+            Position = _StartPosition = _ScreenSize / 2;
+            updateService.Register(this);
+            renderService.Register(this);
         }
 
         #region Implementation of ICollider
@@ -67,7 +70,6 @@ namespace Pong.Ball.Balls
         /// <summary> Reset ball </summary>
         public void Reset()
         {
-            // TODO set to start position and stop ball moving
             _Active = false;
             Position = _StartPosition;
         }

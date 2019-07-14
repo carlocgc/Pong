@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pong.Interfaces.Content;
+using Pong.Interfaces.Core;
+using Pong.Interfaces.Graphics;
 using Pong.Interfaces.Table;
 
 namespace Pong.Table.Tables
@@ -18,11 +20,13 @@ namespace Pong.Table.Tables
 
         private Color _Color;
 
-        public NormalTable(IContentService content)
+        public NormalTable(IContentService content, IRenderService renderService, IUpdateService updateService)
         {
             _Texture = content.Load<Texture2D>(Data.Assets.Background);
             _ColourChangeTime = TimeSpan.FromSeconds(1);
             _Color = GetRandomColor();
+            renderService.Register(this);
+            updateService.Register(this);
         }
 
         #region Implementation of IRenderable
