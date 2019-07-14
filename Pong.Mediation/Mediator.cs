@@ -5,14 +5,14 @@ using Pong.Interfaces.Mediator;
 namespace Pong.Mediation
 {
     /// <summary>
-    /// Stores instances of objects and services that can be shared between modules
+    /// Store and retrieve instances of objects and services by generic interfaces
     /// </summary>
     public class Mediator : IMediator
     {
+        /// <summary> Collection of singleton service instances </summary>       
+        private readonly Dictionary<Type, Object> _ServiceCatalog = new Dictionary<Type, Object>();
         /// <summary> Collection of factory method, used for creating new instances of objects</summary>
         private readonly Dictionary<Type, Func<Object>> _InstanceCatalog = new Dictionary<Type, Func<Object>>();
-        /// <summary> Collection of singleton service instances </summary>
-        private readonly Dictionary<Type, Object> _ServiceCatalog = new Dictionary<Type, Object>();
 
         #region Implementation of IMediator
 
@@ -23,7 +23,7 @@ namespace Pong.Mediation
         /// <returns></returns>
         public T GetInstance<T>()
         {
-            return (T) _ServiceCatalog[typeof(T)]; // TODO should be handled better?
+            return (T)_ServiceCatalog[typeof(T)];
         }
 
         /// <summary>
@@ -33,8 +33,10 @@ namespace Pong.Mediation
         /// <returns></returns>
         public T Create<T>()
         {
-            return (T) _InstanceCatalog[typeof(T)].Invoke(); // TODO should be handled better?
+            return (T)_InstanceCatalog[typeof(T)].Invoke();
         }
+
+        #endregion
 
         /// <summary>
         /// Register a singleton service with the <see cref="IMediator"/>
@@ -62,11 +64,12 @@ namespace Pong.Mediation
         /// <returns></returns>
         public IMediator RegisterCreator<T>(Func<Object> creator)
         {
-            if (_InstanceCatalog.ContainsKey(typeof(T))) _InstanceCatalog.Remove(typeof(T));
+            if (_InstanceCatalog.ContainsKey(typeof(T)))
+            {
+                _InstanceCatalog.Remove(typeof(T));
+            }
             _InstanceCatalog.Add(typeof(T), creator);
             return this;
         }
-
-        #endregion
     }
 }

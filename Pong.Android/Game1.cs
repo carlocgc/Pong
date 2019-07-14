@@ -14,9 +14,9 @@ namespace Pong.Android
         public Game1() : base()
         {
             _GraphicsDeviceManager.IsFullScreen = true;
-            _GraphicsDeviceManager.PreferredBackBufferWidth = 800;
-            _GraphicsDeviceManager.PreferredBackBufferHeight = 480;
-            _GraphicsDeviceManager.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight;
+            _GraphicsDeviceManager.PreferredBackBufferWidth = 1920;
+            _GraphicsDeviceManager.PreferredBackBufferHeight = 1080;
+            _GraphicsDeviceManager.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight; 
         }
 
         /// <summary>
@@ -40,6 +40,7 @@ namespace Pong.Android
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             // TODO: use this.Content to load your game content here
+            base.LoadContent();
         }
 
         /// <summary>
@@ -49,6 +50,7 @@ namespace Pong.Android
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
+            base.UnloadContent();
         }
 
         /// <summary>

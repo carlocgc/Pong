@@ -14,10 +14,10 @@ namespace Pong.Interfaces.Core
     {
         /// <summary> Add an object to update </summary>
         /// <param name="updateable"></param>
-        IUpdateService Register(IUpdateable updateable);
+        void Register(IUpdateable updateable);
 
         /// <summary> Remove an object </summary>
         /// <param name="updateable"></param>
-        IUpdateService Deregister(IUpdateable updateable);
+        void Deregister(IUpdateable updateable);
     }
 }

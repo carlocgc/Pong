@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pong.Table
+namespace Pong.Core
 {
-    public class Class1
+    class GameInstance
     {
     }
 }

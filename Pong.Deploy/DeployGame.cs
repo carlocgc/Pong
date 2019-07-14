@@ -1,28 +1,31 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pong.Ball.Balls;
-using Pong.Content;
-using Pong.Core.Services;
+using Pong.Core.Common.Services;
 using Pong.Graphics;
 using Pong.Interfaces.Ball;
 using Pong.Interfaces.Content;
 using Pong.Interfaces.Core;
 using Pong.Interfaces.Graphics;
 using Pong.Interfaces.Physics.Service;
+using Pong.Interfaces.Table;
 using Pong.Mediation;
 using Pong.Physics.Service;
+using Pong.Table.Tables;
+using ContentService = Pong.Content.ContentService;
 
 namespace Pong.Deploy
 {
     public class DeployGame : Game
     {
-        protected readonly Mediator _Mediator;
         protected readonly GraphicsDeviceManager _GraphicsDeviceManager;
+        private readonly Mediator _Mediator;
 
-        protected SpriteBatch _SpriteBatch;
-        protected IUpdateService _UpdateService;
-        protected IPhysicsService _PhysicsService;
-        protected IContentService _ContentService;
+        private SpriteBatch _SpriteBatch;
+        private IUpdateService _UpdateService;
+        private IPhysicsService _PhysicsService;
+        private IContentService _ContentService;
+        private IRenderService _RenderService;
 
         protected DeployGame()
         {
@@ -45,30 +48,40 @@ namespace Pong.Deploy
 
         protected override void LoadContent()
         {
+            Vector2 screenSize = new Vector2(_GraphicsDeviceManager.GraphicsDevice.Viewport.Bounds.Width, _GraphicsDeviceManager.GraphicsDevice.Viewport.Height);
+
             _SpriteBatch = new SpriteBatch(GraphicsDevice);
 
-            IRenderService renderService = _Mediator.RegisterService<IRenderService, RenderService>(new RenderService(_SpriteBatch));
-            IBall ball = _Mediator.RegisterService<IBall, NormalBall>(new NormalBall(_ContentService));
+            _RenderService = _Mediator.RegisterService<IRenderService, RenderService>(new RenderService(_SpriteBatch));
+            ITable table = _Mediator.RegisterService<ITable, NormalTable>(new NormalTable(_ContentService));
+            IBall ball = _Mediator.RegisterService<IBall, NormalBall>(new NormalBall(_ContentService, screenSize));
 
-            _UpdateService.Register(_PhysicsService).
-                Register(renderService).
-                Register(ball);
+            _UpdateService.Register(_PhysicsService);
+            _UpdateService.Register(table);
+            _UpdateService.Register(ball);
 
-            renderService.Register(ball);
+            _RenderService.Register(table);
+            _RenderService.Register(ball);
+
+            ball.Start();
 
             base.LoadContent();
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.DeepPink);
+
+            _SpriteBatch.Begin();
+            _RenderService.Draw(gameTime, _SpriteBatch);
+            _SpriteBatch.End();
+
             base.Draw(gameTime);
         }
 
         protected override void Update(GameTime gameTime)
         {
             _UpdateService.Update(gameTime);
-
             base.Update(gameTime);
         }
 
