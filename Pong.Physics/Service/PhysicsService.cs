@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlTypes;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
-using Pong.Interfaces.Mediator;
+using Pong.Interfaces.Core;
 using Pong.Interfaces.Physics.Colliders;
 using Pong.Interfaces.Physics.Service;
 
@@ -16,13 +12,11 @@ namespace Pong.Physics.Service
     /// </summary>
     public class PhysicsService : IPhysicsService
     {
-        private readonly IMediator _Mediator;
-
         private readonly List<ICollider> _Colliders = new List<ICollider>();
 
-        public PhysicsService(IMediator mediator)
+        public PhysicsService(IUpdateService updateService)
         {
-            _Mediator = mediator;
+            updateService.Register(this);
         }
 
         #region Implementation of IPhysicsService

@@ -1,64 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
-using Pong.Interfaces.Ball;
-using Pong.Interfaces.Core;
+﻿using Pong.Interfaces.Ball;
+using Pong.Interfaces.Mediator;
 using Pong.Interfaces.Table;
 
 namespace Pong.Core.Common.States
 {
-    public class PlayingState : IState
+    public class PlayingState : BaseState
     {
-        private readonly IBall _Ball;
+        private IBall _Ball;
         private ITable _Table;
 
-        public PlayingState(IBall ball, ITable table)
+        public PlayingState(IMediator mediator) : base(mediator)
         {
-            _Ball = ball;
-            _Table = table;
         }
 
-        #region Implementation of IState
+        #region Overrides of BaseState
 
-        public void OnEnter()
+        public override void OnEnter()
         {
+            base.OnEnter();
+            _Table = _Mediator.Create<ITable>();
+            _Ball = _Mediator.Create<IBall>();
+
             _Ball.Start();
         }
 
-        public void OnExit()
+        public override void OnExit()
         {
-            throw new NotImplementedException();
+            base.OnExit();
         }
 
         #endregion
-
-        #region Implementation of IUpdateable
-
-        public void Update(GameTime gameTime)
-        {
-
-        }
-
-        public Boolean Enabled { get; }
-        public Int32 UpdateOrder { get; }
-        public event EventHandler<EventArgs> EnabledChanged;
-        public event EventHandler<EventArgs> UpdateOrderChanged;
-
-        #endregion
-
-        #region Implementation of IDisposable
-
-        /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
-
     }
 }

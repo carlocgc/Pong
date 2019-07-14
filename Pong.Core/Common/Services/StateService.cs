@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Pong.Interfaces.Core;
 
@@ -11,6 +7,11 @@ namespace Pong.Core.Common.Services
     public class StateService : IStateService
     {
         private IState _CurrentState;
+
+        public StateService(IUpdateService updateService)
+        {
+            updateService.Register(this);
+        }
 
         #region Implementation of IDisposable
 

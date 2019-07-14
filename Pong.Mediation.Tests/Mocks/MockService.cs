@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Pong.Interfaces.Physics.Colliders;
 using Pong.Interfaces.Physics.Service;
-using Microsoft.Xna;
 
 namespace Pong.Mediation.Tests.Mocks
 {

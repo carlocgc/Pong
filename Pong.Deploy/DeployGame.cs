@@ -20,15 +20,16 @@ namespace Pong.Deploy
     public class DeployGame : Game
     {
         protected readonly GraphicsDeviceManager _GraphicsDeviceManager;
+        private SpriteBatch _SpriteBatch;
 
         private Mediator _Mediator;
         private GameInstance _GameInstance;
-        private SpriteBatch _SpriteBatch;
+
         private IUpdateService _UpdateService;
         private IPhysicsService _PhysicsService;
         private IContentService _ContentService;
         private IRenderService _RenderService;
-        
+
         protected DeployGame()
         {
             _GraphicsDeviceManager = new GraphicsDeviceManager(this);
@@ -48,9 +49,6 @@ namespace Pong.Deploy
         {
             _SpriteBatch = new SpriteBatch(GraphicsDevice);
             InitialiseMediator();
-            RegisterUpdateables();
-            RegisterRenderables();
-
             _GameInstance.Init();
 
             base.LoadContent();
@@ -59,25 +57,13 @@ namespace Pong.Deploy
         private void InitialiseMediator()
         {
             Vector2 screenSize = new Vector2(_GraphicsDeviceManager.GraphicsDevice.Viewport.Bounds.Width, _GraphicsDeviceManager.GraphicsDevice.Viewport.Height);
-            _UpdateService = _Mediator.RegisterService<IUpdateService, UpdateService>(new UpdateService());
-            _PhysicsService = _Mediator.RegisterService<IPhysicsService, PhysicsService>(new PhysicsService(_Mediator));
             _ContentService = _Mediator.RegisterService<IContentService, ContentService>(new ContentService(Content));
             _RenderService = _Mediator.RegisterService<IRenderService, RenderService>(new RenderService(_SpriteBatch));
-            _Mediator.RegisterService<ITable, NormalTable>(new NormalTable(_ContentService));
-            _Mediator.RegisterService<IBall, NormalBall>(new NormalBall(_ContentService, screenSize));
-        }
-
-        private void RegisterUpdateables()
-        {
-            _UpdateService.Register(_PhysicsService);
-            _UpdateService.Register(_Mediator.GetInstance<IBall>());
-            _UpdateService.Register(_Mediator.GetInstance<ITable>());
-        }
-
-        private void RegisterRenderables()
-        {
-            _RenderService.Register(_Mediator.GetInstance<IBall>());
-            _RenderService.Register(_Mediator.GetInstance<ITable>());
+            _UpdateService = _Mediator.RegisterService<IUpdateService, UpdateService>(new UpdateService());
+            _PhysicsService = _Mediator.RegisterService<IPhysicsService, PhysicsService>(new PhysicsService(_UpdateService));
+            _Mediator.RegisterService<IStateService, StateService>(new StateService(_UpdateService));
+            _Mediator.RegisterCreator<ITable>(() => new NormalTable(_ContentService, _RenderService, _UpdateService));
+            _Mediator.RegisterCreator<IBall>(() => new NormalBall(_ContentService, _RenderService, _UpdateService, screenSize));
         }
 
         protected override void Draw(GameTime gameTime)

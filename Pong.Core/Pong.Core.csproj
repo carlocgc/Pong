@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="Common\Services\StateService.cs" />
     <Compile Include="Common\Services\UpdateService.cs" />
+    <Compile Include="Common\States\BaseState.cs" />
+    <Compile Include="Common\States\LoadingState.cs" />
     <Compile Include="Common\States\PlayingState.cs" />
     <Compile Include="Common\Tweener\Ease.cs" />
     <Compile Include="Common\Tweener\MemberAccessor.cs" />
