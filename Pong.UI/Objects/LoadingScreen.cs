@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Threading;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pong.Interfaces.Content;
@@ -64,9 +62,9 @@ namespace Pong.UI.Objects
         /// <param name="gameTime"></param>
         /// <param name="spriteBatch"></param>
         /// <param name="matrix"></param>
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Matrix matrix)
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_Screen, new Rectangle(0, 0, matrix.Width, matrix.Height), Color.White);
+            spriteBatch.Draw(_Screen, new Vector2(0,0), Color.White);
         }
 
         #endregion
@@ -106,7 +104,5 @@ namespace Pong.UI.Objects
         }
 
         #endregion
-
-
     }
 }
