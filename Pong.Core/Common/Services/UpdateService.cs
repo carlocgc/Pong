@@ -31,8 +31,9 @@ namespace Pong.Core.Common.Services
 
         public void Update(GameTime gameTime)
         {
-            foreach (IUpdateable updateable in _Updateables)
+            for (var index = _Updateables.Count - 1; index >= 0; index--)
             {
+                IUpdateable updateable = _Updateables[index];
                 updateable.Update(gameTime);
             }
         }
