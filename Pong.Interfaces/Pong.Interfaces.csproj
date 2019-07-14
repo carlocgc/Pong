@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="Ball\IBall.cs" />
     <Compile Include="Content\IContentService.cs" />
+    <Compile Include="Core\IState.cs" />
+    <Compile Include="Core\IStateService.cs" />
     <Compile Include="Core\IUpdateService.cs" />
     <Compile Include="Graphics\IRenderable.cs" />
     <Compile Include="Graphics\IRenderService.cs" />

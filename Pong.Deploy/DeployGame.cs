@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pong.Ball.Balls;
+using Pong.Core;
 using Pong.Core.Common.Services;
 using Pong.Graphics;
 using Pong.Interfaces.Ball;
@@ -19,53 +20,64 @@ namespace Pong.Deploy
     public class DeployGame : Game
     {
         protected readonly GraphicsDeviceManager _GraphicsDeviceManager;
-        private readonly Mediator _Mediator;
 
+        private Mediator _Mediator;
+        private GameInstance _GameInstance;
         private SpriteBatch _SpriteBatch;
         private IUpdateService _UpdateService;
         private IPhysicsService _PhysicsService;
         private IContentService _ContentService;
         private IRenderService _RenderService;
-
+        
         protected DeployGame()
         {
             _GraphicsDeviceManager = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            _Mediator = new Mediator();
         }
 
         #region Overrides of Game
 
         protected override void Initialize()
         {
-            // Initialise services
-            _UpdateService = _Mediator.RegisterService<IUpdateService, UpdateService>(new UpdateService());
-            _PhysicsService = _Mediator.RegisterService<IPhysicsService, PhysicsService>(new PhysicsService(_Mediator));
-            _ContentService = _Mediator.RegisterService<IContentService, ContentService>(new ContentService(Content));
-
+            _Mediator = new Mediator();
+            _GameInstance = new GameInstance(_Mediator);
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            Vector2 screenSize = new Vector2(_GraphicsDeviceManager.GraphicsDevice.Viewport.Bounds.Width, _GraphicsDeviceManager.GraphicsDevice.Viewport.Height);
-
             _SpriteBatch = new SpriteBatch(GraphicsDevice);
+            InitialiseMediator();
+            RegisterUpdateables();
+            RegisterRenderables();
 
-            _RenderService = _Mediator.RegisterService<IRenderService, RenderService>(new RenderService(_SpriteBatch));
-            ITable table = _Mediator.RegisterService<ITable, NormalTable>(new NormalTable(_ContentService));
-            IBall ball = _Mediator.RegisterService<IBall, NormalBall>(new NormalBall(_ContentService, screenSize));
-
-            _UpdateService.Register(_PhysicsService);
-            _UpdateService.Register(table);
-            _UpdateService.Register(ball);
-
-            _RenderService.Register(table);
-            _RenderService.Register(ball);
-
-            ball.Start();
+            _GameInstance.Init();
 
             base.LoadContent();
+        }
+
+        private void InitialiseMediator()
+        {
+            Vector2 screenSize = new Vector2(_GraphicsDeviceManager.GraphicsDevice.Viewport.Bounds.Width, _GraphicsDeviceManager.GraphicsDevice.Viewport.Height);
+            _UpdateService = _Mediator.RegisterService<IUpdateService, UpdateService>(new UpdateService());
+            _PhysicsService = _Mediator.RegisterService<IPhysicsService, PhysicsService>(new PhysicsService(_Mediator));
+            _ContentService = _Mediator.RegisterService<IContentService, ContentService>(new ContentService(Content));
+            _RenderService = _Mediator.RegisterService<IRenderService, RenderService>(new RenderService(_SpriteBatch));
+            _Mediator.RegisterService<ITable, NormalTable>(new NormalTable(_ContentService));
+            _Mediator.RegisterService<IBall, NormalBall>(new NormalBall(_ContentService, screenSize));
+        }
+
+        private void RegisterUpdateables()
+        {
+            _UpdateService.Register(_PhysicsService);
+            _UpdateService.Register(_Mediator.GetInstance<IBall>());
+            _UpdateService.Register(_Mediator.GetInstance<ITable>());
+        }
+
+        private void RegisterRenderables()
+        {
+            _RenderService.Register(_Mediator.GetInstance<IBall>());
+            _RenderService.Register(_Mediator.GetInstance<ITable>());
         }
 
         protected override void Draw(GameTime gameTime)
