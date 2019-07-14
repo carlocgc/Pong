@@ -9,29 +9,20 @@ namespace Pong.Core.Services
     {
         private readonly List<IUpdateable> _Updateables = new List<IUpdateable>();
 
-        public UpdateService()
-        {
-            Enabled = true;
-
-            // TODO May need to check update order of services
-        }
-
         #region Implementation of IUpdateService
 
         /// <summary> Add an object to update </summary>
         /// <param name="updateable"></param>
-        public IUpdateService Register(IUpdateable updateable)
+        public void Register(IUpdateable updateable)
         {
             if (!_Updateables.Contains(updateable)) _Updateables.Add(updateable);
-            return this;
         }
 
         /// <summary> Remove an object </summary>
         /// <param name="updateable"></param>
-        public IUpdateService Deregister(IUpdateable updateable)
+        public void Deregister(IUpdateable updateable)
         {
             if (!_Updateables.Contains(updateable)) _Updateables.Remove(updateable);
-            return this;
         }
 
         #endregion
