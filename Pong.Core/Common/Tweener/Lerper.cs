@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Pong.Core.Tweener
+namespace Pong.Core.Common.Tweener
 {
-    public abstract class MemberLerper
+    public abstract class Lerper
     {
         [Flags]
         public enum Behavior

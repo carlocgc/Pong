@@ -2,7 +2,7 @@ using System;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Pong.Core.Tweener
+namespace Pong.Core.Common.Tweener
 {
     internal class MemberAccessor
     {

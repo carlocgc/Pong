@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Microsoft.Xna.Framework;
 
-namespace Pong.Core.Tweener
+namespace Pong.Core.Common.Tweener
 {
     public class Tweener : Tween.TweenerImpl { };
 
