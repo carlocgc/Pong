@@ -11,7 +11,8 @@ namespace Pong.Desktop
     {
         public Game1() : base()
         {
-
+            _GraphicsDeviceManager.PreferredBackBufferWidth = 800;
+            _GraphicsDeviceManager.PreferredBackBufferHeight = 400;
         }
 
         /// <summary>
@@ -23,6 +24,7 @@ namespace Pong.Desktop
         protected override void Initialize()
         {
             // TODO: Add Desktop specific initialization
+
             base.Initialize();
         }
 
