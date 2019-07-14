@@ -11,8 +11,8 @@ namespace Pong.Desktop
     {
         public Game1() : base()
         {
-            _GraphicsDeviceManager.PreferredBackBufferWidth = 800;
-            _GraphicsDeviceManager.PreferredBackBufferHeight = 400;
+            _GraphicsDeviceManager.PreferredBackBufferWidth = 1280;
+            _GraphicsDeviceManager.PreferredBackBufferHeight = 720;
         }
 
         /// <summary>
