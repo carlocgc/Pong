@@ -43,13 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContentService.cs" />
+    <Compile Include="GameInstance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\UpdateService.cs" />
-    <Compile Include="Tweener\Ease.cs" />
-    <Compile Include="Tweener\MemberAccessor.cs" />
-    <Compile Include="Tweener\MemberLerper.cs" />
-    <Compile Include="Tweener\Tween.cs" />
-    <Compile Include="Tweener\Tweener.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pong.Interfaces\Pong.Interfaces.csproj">
