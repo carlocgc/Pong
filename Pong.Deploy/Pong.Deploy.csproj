@@ -79,6 +79,10 @@
       <Project>{9c4a8b49-daa2-479d-997a-5053ed3500b1}</Project>
       <Name>Pong.Table</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Pong.UI\Pong.UI.csproj">
+      <Project>{90F0D866-0F35-40B6-85AA-8044745AB163}</Project>
+      <Name>Pong.UI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
