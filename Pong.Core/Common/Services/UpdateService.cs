@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Pong.Interfaces.Core;
 
-namespace Pong.Core.Services
+namespace Pong.Core.Common.Services
 {
     public class UpdateService : IUpdateService
     {

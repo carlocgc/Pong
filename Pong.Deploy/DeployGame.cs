@@ -1,8 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pong.Ball.Balls;
-using Pong.Content;
-using Pong.Core.Services;
+using Pong.Core.Common.Services;
 using Pong.Graphics;
 using Pong.Interfaces.Ball;
 using Pong.Interfaces.Content;
@@ -13,6 +12,7 @@ using Pong.Interfaces.Table;
 using Pong.Mediation;
 using Pong.Physics.Service;
 using Pong.Table.Tables;
+using ContentService = Pong.Content.ContentService;
 
 namespace Pong.Deploy
 {

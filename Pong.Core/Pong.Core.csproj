@@ -49,7 +49,7 @@
     <Compile Include="Common\Tweener\MemberLerper.cs" />
     <Compile Include="Common\Tweener\Tween.cs" />
     <Compile Include="Common\Tweener\Tweener.cs" />
-    <Compile Include="ContentService.cs" />
+    <Compile Include="Common\Services\ContentService.cs" />
     <Compile Include="GameInstance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
