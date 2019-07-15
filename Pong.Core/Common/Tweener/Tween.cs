@@ -1,3 +1,31 @@
+/*
+
+Created by Jacob Albano https://bitbucket.org/jacobalbano/glide/commits/7cf90c369db2bdaefbace67cb6e01d9e41ea8ee7
+Modified by Carlo Mongiello
+
+The MIT License (MIT)
+
+Copyright (c) 2013 Jacob Albano
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+*/
+
 using System;
 using System.Collections.Generic;
 
@@ -27,10 +55,10 @@ namespace Pong.Core.Common.Tweener
 
         private bool firstUpdate;
         private int repeatCount, timesRepeated;
-        private MemberLerper.Behavior behavior;
+        private Lerper.Behavior behavior;
 
         private List<MemberAccessor> vars;
-        private List<MemberLerper> lerpers;
+        private List<Lerper> lerpers;
         private List<object> start, end;
         private Dictionary<string, int> varHash;
         private TweenerImpl Parent;
@@ -68,13 +96,13 @@ namespace Pong.Core.Common.Tweener
 
             varHash = new Dictionary<string, int>();
             vars = new List<MemberAccessor>();
-            lerpers = new List<MemberLerper>();
+            lerpers = new List<Lerper>();
             start = new List<object>();
             end = new List<object>();
-            behavior = MemberLerper.Behavior.None;
+            behavior = Lerper.Behavior.None;
         }
 
-        private void AddLerp(MemberLerper lerper, MemberAccessor info, object from, object to)
+        private void AddLerp(Lerper lerper, MemberAccessor info, object from, object to)
         {
             varHash.Add(info.MemberName, vars.Count);
             vars.Add(info);
@@ -155,7 +183,7 @@ namespace Pong.Core.Common.Tweener
 
                 //	If the timer is zero here, we just restarted.
                 //	If reflect mode is on, flip start to end
-                if (time == 0 && (behavior & MemberLerper.Behavior.Reflect) == MemberLerper.Behavior.Reflect)
+                if (time == 0 && (behavior & Lerper.Behavior.Reflect) == Lerper.Behavior.Reflect)
                     Reverse();
 
                 if (update != null)
@@ -271,7 +299,7 @@ namespace Pong.Core.Common.Tweener
         /// <returns>A reference to this.</returns>
         public Tween Reflect()
         {
-            behavior |= MemberLerper.Behavior.Reflect;
+            behavior |= Lerper.Behavior.Reflect;
             return this;
         }
 
@@ -303,8 +331,8 @@ namespace Pong.Core.Common.Tweener
         /// <returns>A reference to this.</returns>
         public Tween Rotation(RotationUnit unit = RotationUnit.Degrees)
         {
-            behavior |= MemberLerper.Behavior.Rotation;
-            behavior |= (unit == RotationUnit.Degrees) ? MemberLerper.Behavior.RotationDegrees : MemberLerper.Behavior.RotationRadians;
+            behavior |= Lerper.Behavior.Rotation;
+            behavior |= (unit == RotationUnit.Degrees) ? Lerper.Behavior.RotationDegrees : Lerper.Behavior.RotationRadians;
 
             return this;
         }
@@ -315,7 +343,7 @@ namespace Pong.Core.Common.Tweener
         /// <returns>A reference to this.</returns>
         public Tween Round()
         {
-            behavior |= MemberLerper.Behavior.Round;
+            behavior |= Lerper.Behavior.Round;
             return this;
         }
         #endregion
