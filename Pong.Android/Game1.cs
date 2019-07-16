@@ -1,5 +1,13 @@
 using Microsoft.Xna.Framework;
+using Pong.Android.Source.Services;
+using Pong.Ball.Balls;
 using Pong.Deploy;
+using Pong.Interfaces.Ball;
+using Pong.Interfaces.Input;
+using Pong.Interfaces.Table;
+using Pong.Interfaces.UI;
+using Pong.Table.Tables;
+using Pong.UI.Objects;
 
 namespace Pong.Android
 {
@@ -14,7 +22,7 @@ namespace Pong.Android
             _GraphicsDeviceManager.IsFullScreen = true;
             _GraphicsDeviceManager.PreferredBackBufferWidth = 1920;
             _GraphicsDeviceManager.PreferredBackBufferHeight = 1080;
-            _GraphicsDeviceManager.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight; 
+            _GraphicsDeviceManager.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight;
         }
 
         /// <summary>
@@ -39,6 +47,14 @@ namespace Pong.Android
             // Create a new SpriteBatch, which can be used to draw textures.
             // TODO: use this.Content to load your game content here
             base.LoadContent();
+
+            _InputService = _Mediator.RegisterService<IInputService, GyroInputService>(new GyroInputService(_UpdateService));
+            _Mediator.RegisterCreator<ILoadingScreen>(() => new LoadingScreen(_ContentService, _RenderService, _UpdateService));
+            _Mediator.RegisterCreator<ITable>(() => new NormalTable(_ContentService, _RenderService, _UpdateService));
+            _Mediator.RegisterCreator<IBall>(() => new InputTestBall(_ContentService, _RenderService, _UpdateService, _VirtualWindowScale, _InputService));
+            //_Mediator.RegisterCreator<IBall>(() => new NormalBall(_ContentService, _RenderService, _UpdateService, _VirtualWindowScale));
+
+            _GameInstance.Init();
         }
 
         /// <summary>

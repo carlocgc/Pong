@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pong.Ball.Balls;
 using Pong.Core;
@@ -24,15 +25,17 @@ namespace Pong.Deploy
     public class DeployGame : Game
     {
         protected readonly GraphicsDeviceManager _GraphicsDeviceManager;
-        private readonly Vector2 _VirtualWindowScale;
-        private SpriteBatch _SpriteBatch;
+        protected readonly Vector2 _VirtualWindowScale;
 
-        private Mediator _Mediator;
-        private GameInstance _GameInstance;
+        protected SpriteBatch _SpriteBatch;
+        protected GameInstance _GameInstance;
+        protected Mediator _Mediator;
 
-        private IUpdateService _UpdateService;
-        private IContentService _ContentService;
-        private IRenderService _RenderService;
+        protected IUpdateService _UpdateService;
+        protected IContentService _ContentService;
+        protected IRenderService _RenderService;
+        protected IInputService _InputService;
+        protected IPhysicsService _PhysicsService;
 
         protected DeployGame()
         {
@@ -54,8 +57,6 @@ namespace Pong.Deploy
         {
             _SpriteBatch = new SpriteBatch(GraphicsDevice);
             InitialiseMediator();
-            _GameInstance.Init();
-
             base.LoadContent();
         }
 
@@ -64,14 +65,9 @@ namespace Pong.Deploy
             _ContentService = _Mediator.RegisterService<IContentService, ContentService>(new ContentService(Content));
             _RenderService = _Mediator.RegisterService<IRenderService, RenderService>(new RenderService(_SpriteBatch));
             _UpdateService = _Mediator.RegisterService<IUpdateService, UpdateService>(new UpdateService());
-            _Mediator.RegisterService<IStateService, StateService>(new StateService(_UpdateService));
-            IPhysicsService physics = _Mediator.RegisterService<IPhysicsService, PhysicsService>(new PhysicsService(_UpdateService));
-            IInputService inputService = _Mediator.RegisterService<IInputService, GamePadInputService>(new GamePadInputService(_UpdateService));
 
-            _Mediator.RegisterCreator<ILoadingScreen>(() => new LoadingScreen(_ContentService, _RenderService, _UpdateService));
-            _Mediator.RegisterCreator<ITable>(() => new NormalTable(_ContentService, _RenderService, _UpdateService));
-            //_Mediator.RegisterCreator<IBall>(() => new NormalBall(_ContentService, _RenderService, _UpdateService, _VirtualWindowScale));
-            _Mediator.RegisterCreator<IBall>(() => new InputTestBall(_ContentService, _RenderService, _UpdateService, _VirtualWindowScale, inputService));
+            _Mediator.RegisterService<IStateService, StateService>(new StateService(_UpdateService));
+            _PhysicsService = _Mediator.RegisterService<IPhysicsService, PhysicsService>(new PhysicsService(_UpdateService));
         }
 
         /// <summary>

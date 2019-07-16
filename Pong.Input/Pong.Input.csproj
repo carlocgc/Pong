@@ -50,7 +50,6 @@
     </Compile>
     <Compile Include="ButtonState.cs" />
     <Compile Include="GamePadInputService.cs" />
-    <Compile Include="GyroInputService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

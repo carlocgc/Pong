@@ -184,8 +184,8 @@ namespace Pong.Ball.Balls
             String cancel = "CANCEL_BUTTON";
             IButtonState confirmState = buttons.FirstOrDefault(button => button.Name == confirm);
             IButtonState cancelState = buttons.FirstOrDefault(button => button.Name == cancel);
-            if (confirmState.IsHeld) _SpriteColour = Color.Green;
-            if (cancelState.IsHeld) _SpriteColour = Color.Red;
+            if (confirmState != null && confirmState.IsHeld) _SpriteColour = Color.Green;
+            if (cancelState != null && cancelState.IsHeld) _SpriteColour = Color.Red;
 
             _Direction = direction;
         }
