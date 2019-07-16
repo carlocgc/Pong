@@ -50,6 +50,9 @@
     <Compile Include="Core\IUpdateService.cs" />
     <Compile Include="Graphics\IRenderable.cs" />
     <Compile Include="Graphics\IRenderService.cs" />
+    <Compile Include="Input\IButtonState.cs" />
+    <Compile Include="Input\IInputEvent.cs" />
+    <Compile Include="Input\IInputListener.cs" />
     <Compile Include="Input\IInputService.cs" />
     <Compile Include="Mediator\IMediator.cs" />
     <Compile Include="Physics\Colliders\ICollider.cs" />

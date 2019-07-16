@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace Pong.Interfaces.Input
 {
-    public interface IInputService
+    public class IButtonState
     {
-        void RegisterInputListener()
+        public String Name { get; }
+
+        public Boolean IsPressed { get; }
+
+        public Boolean IsHeld { get; }
     }
 }

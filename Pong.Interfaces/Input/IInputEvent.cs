@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 
 namespace Pong.Interfaces.Input
 {
-    public interface IInputService
+    public class IInputEvent
     {
-        void RegisterInputListener()
+        public Vector2 Direction { get; }
+
+        public List<IButtonState> ButtonsStates { get; }
     }
 }
