@@ -7,10 +7,10 @@ using Microsoft.Xna.Framework;
 
 namespace Pong.Interfaces.Input
 {
-    public class IInputEvent
+    public interface IInputEvent
     {
-        public Vector2 Direction { get; }
+        Vector2 Direction { get; }
 
-        public List<IButtonState> ButtonsStates { get; }
+        List<IButtonState> ButtonsStates { get; }
     }
 }

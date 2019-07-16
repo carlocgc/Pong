@@ -42,9 +42,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ButtonState.cs" />
     <Compile Include="InputEvent.cs" />
     <Compile Include="InputService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Pong.Interfaces\Pong.Interfaces.csproj">
+      <Project>{57D8D702-4E9E-4283-B5EF-CAF450C9AF24}</Project>
+      <Name>Pong.Interfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

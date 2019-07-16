@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Pong.Interfaces.Input
 {
-    public class IInputListener
+    public interface IInputListener
     {
+        void InputUpdate(IInputEvent input);
     }
 }
