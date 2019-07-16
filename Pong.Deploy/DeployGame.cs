@@ -4,10 +4,12 @@ using Pong.Ball.Balls;
 using Pong.Core;
 using Pong.Core.Common.Services;
 using Pong.Graphics;
+using Pong.Input;
 using Pong.Interfaces.Ball;
 using Pong.Interfaces.Content;
 using Pong.Interfaces.Core;
 using Pong.Interfaces.Graphics;
+using Pong.Interfaces.Input;
 using Pong.Interfaces.Physics.Service;
 using Pong.Interfaces.Table;
 using Pong.Interfaces.UI;
@@ -29,7 +31,6 @@ namespace Pong.Deploy
         private GameInstance _GameInstance;
 
         private IUpdateService _UpdateService;
-        private IPhysicsService _PhysicsService;
         private IContentService _ContentService;
         private IRenderService _RenderService;
 
@@ -59,19 +60,22 @@ namespace Pong.Deploy
         }
 
         private void InitialiseMediator()
-        {            
+        {
             _ContentService = _Mediator.RegisterService<IContentService, ContentService>(new ContentService(Content));
             _RenderService = _Mediator.RegisterService<IRenderService, RenderService>(new RenderService(_SpriteBatch));
             _UpdateService = _Mediator.RegisterService<IUpdateService, UpdateService>(new UpdateService());
-            _PhysicsService = _Mediator.RegisterService<IPhysicsService, PhysicsService>(new PhysicsService(_UpdateService));
             _Mediator.RegisterService<IStateService, StateService>(new StateService(_UpdateService));
+            IPhysicsService physics = _Mediator.RegisterService<IPhysicsService, PhysicsService>(new PhysicsService(_UpdateService));
+            IInputService inputService = _Mediator.RegisterService<IInputService, GamePadInputService>(new GamePadInputService(_UpdateService));
+
             _Mediator.RegisterCreator<ILoadingScreen>(() => new LoadingScreen(_ContentService, _RenderService, _UpdateService));
             _Mediator.RegisterCreator<ITable>(() => new NormalTable(_ContentService, _RenderService, _UpdateService));
-            _Mediator.RegisterCreator<IBall>(() => new NormalBall(_ContentService, _RenderService, _UpdateService, _VirtualWindowScale));
+            //_Mediator.RegisterCreator<IBall>(() => new NormalBall(_ContentService, _RenderService, _UpdateService, _VirtualWindowScale));
+            _Mediator.RegisterCreator<IBall>(() => new InputTestBall(_ContentService, _RenderService, _UpdateService, _VirtualWindowScale, inputService));
         }
 
         /// <summary>
-        /// Gets the scale matrix from a virtual resolution 
+        /// Gets the scale matrix from a virtual resolution
         /// </summary>
         /// <returns></returns>
         private Matrix GetWindowScalar(Vector2 virtualResolution)

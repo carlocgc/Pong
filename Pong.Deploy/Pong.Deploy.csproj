@@ -63,6 +63,10 @@
       <Project>{389BB1EC-27DA-45DE-A71F-59063AF46208}</Project>
       <Name>Pong.Graphics</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Pong.Input\Pong.Input.csproj">
+      <Project>{E288CCB5-B3BF-4730-A1FB-FE20353F6263}</Project>
+      <Name>Pong.Input</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Pong.Interfaces\Pong.Interfaces.csproj">
       <Project>{57D8D702-4E9E-4283-B5EF-CAF450C9AF24}</Project>
       <Name>Pong.Interfaces</Name>
