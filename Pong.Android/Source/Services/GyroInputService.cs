@@ -7,17 +7,23 @@ using Pong.Interfaces.Input;
 
 namespace Pong.Android.Source.Services
 {
+    /// <summary>
+    /// Gyroscopic input service
+    /// </summary>
     public class GyroInputService : IInputService
     {
+        /// <summary> Direction the device is tilted </summary>
         private Vector2 _Direction;
-
+        /// <summary> All button states provided to listeners </summary>
         private readonly List<IButtonState> _ButtonStates = new List<IButtonState>();
-
+        /// <summary> Device accelerometer </summary>
         private readonly Accelerometer _Accelerometer = new Accelerometer();
+        /// <summary> The display orientation of the device, used to determine the direction provided to listeners </summary>
+        private readonly DisplayOrientation _Orientation;
 
-        public GyroInputService(IUpdateService updateService)
+        public GyroInputService(IUpdateService updateService, DisplayOrientation orientation)
         {
-            SensorState state = _Accelerometer.State;
+            _Orientation = orientation;
             _Accelerometer.Start();
             updateService.Register(this);
         }
@@ -42,9 +48,30 @@ namespace Pong.Android.Source.Services
 
         public void Update(GameTime gameTime)
         {
-            // Reversed X and Y because accelerator gives reversed result when x = x / y = y
-            Single accX = _Accelerometer.CurrentValue.Acceleration.Y;
-            Single accY = _Accelerometer.CurrentValue.Acceleration.X;
+            Single accX = 0f;
+            Single accY = 0f;
+
+            if ((_Orientation & DisplayOrientation.LandscapeLeft) != 0) // Landscape left
+            {
+                accX = _Accelerometer.CurrentValue.Acceleration.Y;
+                accY = _Accelerometer.CurrentValue.Acceleration.X;
+            }
+            else if ((_Orientation & DisplayOrientation.LandscapeRight) != 0) // Landscape right
+            {
+                accX = -_Accelerometer.CurrentValue.Acceleration.Y;
+                accY = -_Accelerometer.CurrentValue.Acceleration.X;
+            }
+            else if ((_Orientation & DisplayOrientation.Portrait) != 0) // Portrait
+            {
+                accX = _Accelerometer.CurrentValue.Acceleration.X;
+                accY = _Accelerometer.CurrentValue.Acceleration.Y;
+            }
+            else // Reverse Portrait
+            {
+                accX = -_Accelerometer.CurrentValue.Acceleration.X;
+                accY = -_Accelerometer.CurrentValue.Acceleration.Y;
+            }
+
             _Direction = new Vector2(accX, accY);
 
             for (var index = _Listeners.Count - 1; index >= 0; index--)
@@ -66,7 +93,6 @@ namespace Pong.Android.Source.Services
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         public void Dispose()
         {
-
         }
 
         #endregion
