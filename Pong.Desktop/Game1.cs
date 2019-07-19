@@ -1,6 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Pong.Ball.Balls;
 using Pong.Deploy;
+using Pong.Input;
+using Pong.Interfaces.Ball;
+using Pong.Interfaces.Input;
+using Pong.Interfaces.Table;
+using Pong.Interfaces.UI;
+using Pong.Table.Tables;
+using Pong.UI.Objects;
+using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
 
 namespace Pong.Desktop
 {
@@ -37,6 +46,14 @@ namespace Pong.Desktop
             // Create a new SpriteBatch, which can be used to draw textures.
             // TODO: use this.Content to load your game content here
             base.LoadContent();
+
+            _InputService = _Mediator.RegisterService<IInputService, GamePadInputService>(new GamePadInputService(_UpdateService));
+            _Mediator.RegisterCreator<ILoadingScreen>(() => new LoadingScreen(_ContentService, _RenderService, _UpdateService));
+            _Mediator.RegisterCreator<ITable>(() => new NormalTable(_ContentService, _RenderService, _UpdateService));
+            _Mediator.RegisterCreator<IBall>(() => new InputTestBall(_ContentService, _RenderService, _UpdateService, _VirtualWindowScale, _InputService));
+            //_Mediator.RegisterCreator<IBall>(() => new NormalBall(_ContentService, _RenderService, _UpdateService, _VirtualWindowScale));
+
+            _GameInstance.Init();
         }
 
         /// <summary>
