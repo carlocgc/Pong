@@ -15,7 +15,7 @@ namespace Pong.Ball.Balls
     /// <summary>
     /// A standard ball
     /// </summary>
-    public class InputTestBall : IBall, ICollider, IInputListener
+    public class InputTestBall : IBall, IInputListener
     {
         /// <summary> Random number generator </summary>
         private readonly Random _Rand = new Random(Environment.TickCount);

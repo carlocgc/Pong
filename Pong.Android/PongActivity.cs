@@ -14,12 +14,12 @@ namespace Pong.Android
         , LaunchMode = LaunchMode.SingleInstance
         , ScreenOrientation = ScreenOrientation.Landscape
         , ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.Keyboard | ConfigChanges.KeyboardHidden | ConfigChanges.ScreenSize | ConfigChanges.ScreenLayout)]
-    public class Activity1 : Microsoft.Xna.Framework.AndroidGameActivity
+    public class PongActivity : Microsoft.Xna.Framework.AndroidGameActivity
     {
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-            var g = new Game1();
+            var g = new AndroidGame();
             SetContentView((View)g.Services.GetService(typeof(View)));
             g.Run();
         }

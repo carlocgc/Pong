@@ -21,6 +21,8 @@ namespace Pong.Android.Source.Services
         /// <summary> The display orientation of the device, used to determine the direction provided to listeners </summary>
         private readonly DisplayOrientation _Orientation;
 
+        private readonly Single _Sensitivity = 5f;
+
         public GyroInputService(IUpdateService updateService, DisplayOrientation orientation)
         {
             _Orientation = orientation;
@@ -72,7 +74,7 @@ namespace Pong.Android.Source.Services
                 accY = -_Accelerometer.CurrentValue.Acceleration.Y;
             }
 
-            _Direction = new Vector2(accX, accY);
+            _Direction = new Vector2(accX, accY) * _Sensitivity;
 
             for (var index = _Listeners.Count - 1; index >= 0; index--)
             {

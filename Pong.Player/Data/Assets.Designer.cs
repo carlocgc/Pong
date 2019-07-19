@@ -61,7 +61,7 @@ namespace Pong.Player.Data {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Graphics/player.
+        ///   Looks up a localized string similar to Graphics/paddle.
         /// </summary>
         internal static string Player {
             get {

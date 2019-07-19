@@ -5,8 +5,10 @@ using Pong.Deploy;
 using Pong.Input;
 using Pong.Interfaces.Ball;
 using Pong.Interfaces.Input;
+using Pong.Interfaces.Player;
 using Pong.Interfaces.Table;
 using Pong.Interfaces.UI;
+using Pong.Player;
 using Pong.Table.Tables;
 using Pong.UI.Objects;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
@@ -16,9 +18,9 @@ namespace Pong.Desktop
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : DeployGame
+    public class DesktopGame : DeployGame
     {
-        public Game1() : base()
+        public DesktopGame() : base()
         {
             _GraphicsDeviceManager.PreferredBackBufferWidth = 1280;
             _GraphicsDeviceManager.PreferredBackBufferHeight = 720;
@@ -50,8 +52,8 @@ namespace Pong.Desktop
             _InputService = _Mediator.RegisterService<IInputService, GamePadInputService>(new GamePadInputService(_UpdateService));
             _Mediator.RegisterCreator<ILoadingScreen>(() => new LoadingScreen(_ContentService, _RenderService, _UpdateService));
             _Mediator.RegisterCreator<ITable>(() => new NormalTable(_ContentService, _RenderService, _UpdateService));
-            _Mediator.RegisterCreator<IBall>(() => new InputTestBall(_ContentService, _RenderService, _UpdateService, _VirtualWindowScale, _InputService));
-            //_Mediator.RegisterCreator<IBall>(() => new NormalBall(_ContentService, _RenderService, _UpdateService, _VirtualWindowScale));
+            _Mediator.RegisterCreator<IBall>(() => new NormalBall(_ContentService, _RenderService, _UpdateService, _VirtualWindowScale));
+            _Mediator.RegisterCreator<IPlayer>(() => new NormalPlayer(_ContentService, _RenderService, _PhysicsService, _UpdateService, _InputService, _VirtualWindowScale));
 
             _GameInstance.Init();
         }

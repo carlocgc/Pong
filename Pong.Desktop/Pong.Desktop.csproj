@@ -43,7 +43,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Game1.cs" />
+    <Compile Include="DesktopGame.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -131,6 +131,10 @@
     <ProjectReference Include="..\Pong.Mediation\Pong.Mediation.csproj">
       <Project>{7C6A674E-E8BD-4FDE-A021-10D883AA2EF7}</Project>
       <Name>Pong.Mediation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pong.Player\Pong.Player.csproj">
+      <Project>{2ADA1175-E9D9-4A62-8FC0-3E5D6B3EF0C7}</Project>
+      <Name>Pong.Player</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pong.Table\Pong.Table.csproj">
       <Project>{9C4A8B49-DAA2-479D-997A-5053ED3500B1}</Project>

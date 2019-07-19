@@ -1,5 +1,6 @@
 ﻿using Pong.Interfaces.Ball;
 using Pong.Interfaces.Mediator;
+using Pong.Interfaces.Player;
 using Pong.Interfaces.Table;
 
 namespace Pong.Core.Common.States
@@ -8,6 +9,7 @@ namespace Pong.Core.Common.States
     {
         private IBall _Ball;
         private ITable _Table;
+        private IPlayer _Player;
 
         public PlayingState(IMediator mediator) : base(mediator)
         {
@@ -20,6 +22,7 @@ namespace Pong.Core.Common.States
             base.OnEnter();
             _Table = _Mediator.Create<ITable>();
             _Ball = _Mediator.Create<IBall>();
+            _Player = _Mediator.Create<IPlayer>();
 
             _Ball.Start();
         }
