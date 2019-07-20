@@ -62,6 +62,10 @@
       <Project>{E7922478-A845-4EB2-AD66-1143B8AFE48F}</Project>
       <Name>Pong.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Pong.Enemy\Pong.Enemy.csproj">
+      <Project>{33EB2A83-1983-4127-B6C7-6E37B2231D7A}</Project>
+      <Name>Pong.Enemy</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Pong.Graphics\Pong.Graphics.csproj">
       <Project>{389BB1EC-27DA-45DE-A71F-59063AF46208}</Project>
       <Name>Pong.Graphics</Name>
@@ -81,6 +85,10 @@
     <ProjectReference Include="..\Pong.Physics\Pong.Physics.csproj">
       <Project>{D590DADB-F14A-4CEA-9804-56E9DCAEABCC}</Project>
       <Name>Pong.Physics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pong.Player\Pong.Player.csproj">
+      <Project>{2ADA1175-E9D9-4A62-8FC0-3E5D6B3EF0C7}</Project>
+      <Name>Pong.Player</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pong.Table\Pong.Table.csproj">
       <Project>{9c4a8b49-daa2-479d-997a-5053ed3500b1}</Project>

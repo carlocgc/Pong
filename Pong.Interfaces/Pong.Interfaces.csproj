@@ -44,10 +44,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ball\IBall.cs" />
+    <Compile Include="Ball\IBallGoalListener.cs" />
+    <Compile Include="Ball\IBallMovementListener.cs" />
     <Compile Include="Content\IContentService.cs" />
     <Compile Include="Core\IState.cs" />
     <Compile Include="Core\IStateService.cs" />
     <Compile Include="Core\IUpdateService.cs" />
+    <Compile Include="Enemy\IEnemy.cs" />
     <Compile Include="Graphics\IRenderable.cs" />
     <Compile Include="Graphics\IRenderService.cs" />
     <Compile Include="Input\IButtonState.cs" />
@@ -56,15 +59,16 @@
     <Compile Include="Mediator\IMediator.cs" />
     <Compile Include="Physics\Colliders\ICollider.cs" />
     <Compile Include="Physics\Service\IPhysicsService.cs" />
+    <Compile Include="Player\IPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Roles\INotifer.cs" />
+    <Compile Include="Roles\IResetable.cs" />
+    <Compile Include="Roles\ITransform.cs" />
     <Compile Include="Table\ITable.cs" />
     <Compile Include="UI\ILoadingScreen.cs" />
     <Compile Include="UI\ILoadingScreenListener.cs" />
+    <Compile Include="UI\IScoreboard.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Enemy\" />
-    <Folder Include="Player\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

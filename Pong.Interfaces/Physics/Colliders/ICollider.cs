@@ -1,8 +1,15 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Pong.Interfaces.Physics.Service;
 
 namespace Pong.Interfaces.Physics.Colliders
 {
+    public enum CollisionGroup
+    {
+        BALL,
+        PADDLE,
+    }
+
     /// <summary>
     /// Collider used with <see cref="IPhysicsService"/>
     /// </summary>
@@ -10,6 +17,9 @@ namespace Pong.Interfaces.Physics.Colliders
     {
         /// <summary> Bounds of the collider </summary>
         Rectangle BoundingRect { get; }
+
+        /// <summary> The collision group this collider belongs to, used to only check collisions between particular groups </summary>
+        CollisionGroup CollisionGroup { get; }
 
         /// <summary>
         /// Cause collision behaviour

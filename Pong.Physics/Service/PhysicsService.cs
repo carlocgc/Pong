@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Pong.Interfaces.Core;
 using Pong.Interfaces.Physics.Colliders;
@@ -24,42 +25,17 @@ namespace Pong.Physics.Service
         /// <summary> Register a collider with the physics service </summary>
         /// <param name="collider"></param>
         /// <returns></returns>
-        public IPhysicsService RegisterCollider(ICollider collider)
+        public void Register(ICollider collider)
         {
             if (!_Colliders.Contains(collider)) _Colliders.Add(collider);
-            return this;
         }
 
         /// <summary> Deregister a collider from the physics service </summary>
         /// <param name="collider"></param>
         /// <returns></returns>
-        public IPhysicsService DeRegisterCollider(ICollider collider)
+        public void Deregister(ICollider collider)
         {
             if (_Colliders.Contains(collider)) _Colliders.Remove(collider);
-            return this;
-        }
-
-        /// <summary> Start physics service </summary>
-        public void Start()
-        {
-            Enabled = true;
-        }
-
-        /// <summary>
-        /// Calculates if two rectangles collide
-        /// </summary>
-        /// <returns></returns>
-        private Boolean BoxToBoxIntersect(ICollider colA, ICollider colB)
-        {
-            // TODO Bounding box collision
-
-            return false;
-        }
-
-        /// <summary> Stop the physics service </summary>
-        public void Stop()
-        {
-            Enabled = false;
         }
 
         #endregion
@@ -69,17 +45,31 @@ namespace Pong.Physics.Service
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         public void Dispose()
         {
-            Stop();
             _Colliders.Clear();
         }
 
         #endregion
 
+        private void CheckCollisions(CollisionGroup groupA, CollisionGroup groupB)
+        {
+            List<ICollider> collidersA = _Colliders.Where(col => col.CollisionGroup == groupA).ToList();
+            List<ICollider> collidersB = _Colliders.Where(col => col.CollisionGroup == groupB).ToList();
+            foreach (ICollider colA in collidersA)
+            {
+                foreach (ICollider colB in collidersB)
+                {
+                    if (!colA.BoundingRect.Intersects(colB.BoundingRect)) continue;
+                    colA.Collide(colB);
+                    colB.Collide(colA);
+                }
+            }
+        }
+
         #region Implementation of IUpdateable
 
         public void Update(GameTime gameTime)
         {
-            
+            CheckCollisions(CollisionGroup.BALL, CollisionGroup.PADDLE);
         }
 
         public Boolean Enabled { get; private set; }

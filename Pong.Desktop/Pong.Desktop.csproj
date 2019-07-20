@@ -43,7 +43,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Game1.cs" />
+    <Compile Include="DesktopGame.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -106,6 +106,8 @@
     </None>
     <None Include="app.config" />
     <None Include="app.manifest" />
+    <None Include="Content\Fonts\SaucerBB.spritefont" />
+    <None Include="Content\Fonts\SaucerBB.ttf" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pong.Ball\Pong.Ball.csproj">
@@ -120,6 +122,10 @@
       <Project>{a609603e-1962-4d38-b3d1-d6c99deb1c3f}</Project>
       <Name>Pong.Deploy</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Pong.Enemy\Pong.Enemy.csproj">
+      <Project>{33EB2A83-1983-4127-B6C7-6E37B2231D7A}</Project>
+      <Name>Pong.Enemy</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Pong.Input\Pong.Input.csproj">
       <Project>{E288CCB5-B3BF-4730-A1FB-FE20353F6263}</Project>
       <Name>Pong.Input</Name>
@@ -131,6 +137,10 @@
     <ProjectReference Include="..\Pong.Mediation\Pong.Mediation.csproj">
       <Project>{7C6A674E-E8BD-4FDE-A021-10D883AA2EF7}</Project>
       <Name>Pong.Mediation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pong.Player\Pong.Player.csproj">
+      <Project>{2ADA1175-E9D9-4A62-8FC0-3E5D6B3EF0C7}</Project>
+      <Name>Pong.Player</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pong.Table\Pong.Table.csproj">
       <Project>{9C4A8B49-DAA2-479D-997A-5053ED3500B1}</Project>

@@ -42,7 +42,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Balls\InputTestBall.cs" />
     <Compile Include="Balls\NormalBall.cs" />
     <Compile Include="Data\Assets.Designer.cs">
       <AutoGen>True</AutoGen>

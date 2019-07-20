@@ -49,6 +49,7 @@
       <DependentUpon>Assets.resx</DependentUpon>
     </Compile>
     <Compile Include="Objects\LoadingScreen.cs" />
+    <Compile Include="Objects\Scoreboard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

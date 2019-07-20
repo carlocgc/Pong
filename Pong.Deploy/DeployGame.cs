@@ -1,16 +1,26 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Pong.Ball.Balls;
 using Pong.Core;
 using Pong.Core.Common.Services;
+using Pong.Enemy;
 using Pong.Graphics;
+using Pong.Interfaces.Ball;
 using Pong.Interfaces.Content;
 using Pong.Interfaces.Core;
+using Pong.Interfaces.Enemy;
 using Pong.Interfaces.Graphics;
 using Pong.Interfaces.Input;
 using Pong.Interfaces.Physics.Colliders;
 using Pong.Interfaces.Physics.Service;
+using Pong.Interfaces.Player;
+using Pong.Interfaces.Table;
+using Pong.Interfaces.UI;
 using Pong.Mediation;
 using Pong.Physics.Service;
+using Pong.Player;
+using Pong.Table.Tables;
+using Pong.UI.Objects;
 using ContentService = Pong.Content.ContentService;
 
 namespace Pong.Deploy
@@ -59,22 +69,23 @@ namespace Pong.Deploy
 
         protected override void LoadContent()
         {
-            _SpriteBatch = new SpriteBatch(GraphicsDevice);
-            InitialiseMediator();
+            _ContentService = _Mediator.RegisterService<IContentService, ContentService>(new ContentService(Content));
+            _RenderService = _Mediator.RegisterService<IRenderService, RenderService>(new RenderService(_SpriteBatch));
+            _PhysicsService = _Mediator.RegisterService<IPhysicsService, PhysicsService>(new PhysicsService(_UpdateService));
+            _Mediator.RegisterService<IStateService, StateService>(new StateService(_UpdateService));
+
+            _Mediator.RegisterCreator<ILoadingScreen>(() => new LoadingScreen(_ContentService, _RenderService, _UpdateService));
+            _Mediator.RegisterCreator<IScoreboard>(() => new Scoreboard(_ContentService, _RenderService, _UpdateService));
+            _Mediator.RegisterCreator<ITable>(() => new NormalTable(_ContentService, _RenderService, _UpdateService));
+            _Mediator.RegisterCreator<IBall>(() => new NormalBall(_ContentService, _RenderService, _UpdateService, _PhysicsService, _VirtualWindowScale));
+            _Mediator.RegisterCreator<IPlayer>(() => new NormalPlayer(_ContentService, _RenderService, _UpdateService, _PhysicsService, _InputService, _VirtualWindowScale));
+            _Mediator.RegisterCreator<IEnemy>(() => new NormalEnemy(_ContentService, _RenderService, _UpdateService, _PhysicsService, _VirtualWindowScale));
+
+            _GameInstance.Init();
+
             base.LoadContent();
         }
 
-        /// <summary>
-        /// Registers base game services with the <see cref="Mediator"/>
-        /// </summary>
-        private void InitialiseMediator()
-        {
-            _ContentService = _Mediator.RegisterService<IContentService, ContentService>(new ContentService(Content));
-            _RenderService = _Mediator.RegisterService<IRenderService, RenderService>(new RenderService(_SpriteBatch));
-            _UpdateService = _Mediator.RegisterService<IUpdateService, UpdateService>(new UpdateService());
-            _PhysicsService = _Mediator.RegisterService<IPhysicsService, PhysicsService>(new PhysicsService(_UpdateService));
-            _Mediator.RegisterService<IStateService, StateService>(new StateService(_UpdateService));
-        }
 
         /// <summary>
         /// Gets the scale matrix from a virtual resolution, used to keep the game scaled within any sized window

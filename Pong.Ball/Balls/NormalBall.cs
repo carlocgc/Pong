@@ -1,18 +1,20 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pong.Interfaces.Ball;
 using Pong.Interfaces.Content;
-using Pong.Interfaces.Physics.Colliders;
-using System;
 using Pong.Interfaces.Core;
 using Pong.Interfaces.Graphics;
+using Pong.Interfaces.Physics.Colliders;
+using Pong.Interfaces.Physics.Service;
 
 namespace Pong.Ball.Balls
 {
     /// <summary>
     /// A standard ball
     /// </summary>
-    public class NormalBall : IBall, ICollider
+    public class NormalBall : IBall
     {
         /// <summary> Random number generator </summary>
         private readonly Random _Rand = new Random(Environment.TickCount);
@@ -22,36 +24,49 @@ namespace Pong.Ball.Balls
         private readonly Vector2 _ScreenSize;
         /// <summary> The center of the screen </summary>
         private readonly Vector2 _StartPosition;
-        /// <summary> Min travel speed </summary>
-        private readonly Single _MinSpeed;
-        /// <summary> Max travel speed </summary>
-        private readonly Single _MaxSpeed;
-        /// <summary> Current travel speed </summary>
-        private Single _Speed;
+        /// <summary> Base movement speed </summary>
+        private readonly Single _Speed;
         /// <summary> Whether the ball is active/moving </summary>
         private Boolean _Active;
         /// <summary> THe direction the ball is moving </summary>
         private Vector2 _Direction;
+        /// <summary> Position of the ball </summary>
+        private Vector2 _Position;
 
-        /// <summary> The position of the ball </summary>
-        public Vector2 Position { get; set; }
+        /// <summary> Position of the ball </summary>
+        public Vector2 Position
+        {
+            get => _Position;
+            set
+            {
+                _Position = value;
+                BoundingRect = new Rectangle((Int32)Position.X, (Int32)Position.Y, _Texture.Width, _Texture.Height);
+                foreach (IBallMovementListener listener in _MoveListeners)
+                {
+                    listener.OnBallMoved(value);
+                }
+            }
+        }
 
-        public NormalBall(IContentService contentService, IRenderService renderService, IUpdateService updateService, Vector2 screenDimensions)
+        /// <summary> Rectangular bounds of the collider </summary>
+        public Rectangle BoundingRect { get; private set; }
+
+        /// <summary> The collision group this collider belongs to, used to only check collisions between particular groups </summary>
+        public CollisionGroup CollisionGroup { get; }
+
+        public NormalBall(IContentService contentService, IRenderService renderService, IUpdateService updateService, IPhysicsService physicsService, Vector2 screenSize)
         {
             _Texture = contentService.Load<Texture2D>(Data.Assets.Ball);
-            _ScreenSize = screenDimensions;
-            _MinSpeed = 500;
-            _MaxSpeed = 1000;
-            _Speed = GetRandomSpeed();
+            _ScreenSize = screenSize;
+            _Speed = 700f;
             Position = _StartPosition = _ScreenSize / 2;
+            CollisionGroup = CollisionGroup.BALL;
             updateService.Register(this);
             renderService.Register(this);
+            physicsService.Register(this);
         }
 
         #region Implementation of ICollider
-
-        /// <summary> Rectangular bounds of the collider </summary>
-        public Rectangle BoundingRect => new Rectangle(Position.ToPoint(), new Point(_Texture.Width, _Texture.Height));
 
         /// <summary>
         /// Cause collision behaviour
@@ -60,7 +75,35 @@ namespace Pong.Ball.Balls
         /// <returns></returns>
         public void Collide(ICollider collider)
         {
-            // TODO Bounce off the collided object
+            Vector2 postColPos = Position;
+
+            // Move ball so it is no longer intersecting and invert its movement direction
+
+            if (BoundingRect.Center.Y < collider.BoundingRect.Top) // Ball is above the collider
+            {
+                postColPos = new Vector2(postColPos.X, collider.BoundingRect.Top - BoundingRect.Height);
+                _Direction.Y = -1;
+                return;
+            }
+            if (BoundingRect.Center.Y > collider.BoundingRect.Bottom) // Ball is below the collider
+            {
+                postColPos = new Vector2(postColPos.X, collider.BoundingRect.Bottom);
+                _Direction.Y = 1;
+                return;
+            }
+
+            if (BoundingRect.Center.X > collider.BoundingRect.Right) // Ball is on the right side of a collider
+            {
+                postColPos = new Vector2(collider.BoundingRect.Right, postColPos.Y);
+                _Direction.X *= -1;
+            }
+            else if (BoundingRect.Center.X < collider.BoundingRect.Left) // Ball is on the left side of a collider
+            {
+                postColPos = new Vector2(collider.BoundingRect.Left - BoundingRect.Width, postColPos.Y);
+                _Direction.X *= -1;
+            }
+
+            Position = postColPos;
         }
 
         #endregion
@@ -91,7 +134,7 @@ namespace Pong.Ball.Balls
         /// <param name="spriteBatch"></param>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_Texture, Position, Color.White);
+            spriteBatch.Draw(_Texture, BoundingRect, Color.White);
         }
 
         #endregion
@@ -109,51 +152,52 @@ namespace Pong.Ball.Balls
         /// <summary> Get a random direction as a normalized vector </summary>
         private Vector2 GetRandomDirection()
         {
-            Single x = (Single)_Rand.NextDouble();
-            Single y = (Single)_Rand.NextDouble();
+            Int32[] angles = { 45, 135, 225, 315 };
+            Int32 angle = angles[_Rand.Next(0, angles.Length)];
+            Single radians = (Single)(angle * Math.PI / 180f);
+            Single x = (Single)Math.Cos(radians);
+            Single y = (Single)Math.Sin(radians);
             return new Vector2(x, y);
         }
 
-        /// <summary> Gets a random speed between min and max speed</summary>
-        /// <returns></returns>
-        private Single GetRandomSpeed()
-        {
-            return _Rand.Next((Int32)_MinSpeed, (Int32)_MaxSpeed);
-        }
-
         /// <summary>
-        /// returns whether the 
+        /// Checks the object are within the given bounds
         /// </summary>
         /// <param name="objectBounds"></param>
         /// <param name="screenSize"></param>
         /// <returns></returns>
-        private void KeepWithinScreen(Rectangle objectBounds, Vector2 screenSize)
+        private void CheckScreenBounds(Rectangle objectBounds, Vector2 screenSize)
         {
             Single x = Position.X;
             Single y = Position.Y;
             if (objectBounds.X < 0)
             {
-                x = 0;
-                _Direction = new Vector2(_Direction.X * -1, _Direction.Y);
-                _Speed = GetRandomSpeed();
+                for (var index = _GoalListeners.Count - 1; index >= 0; index--)
+                {
+                    IBallGoalListener listener = _GoalListeners[index];
+                    listener.OnGoal(false);
+                }
+                return;
             }
-            else if (objectBounds.X + objectBounds.Width > screenSize.X)
+            if (objectBounds.X + objectBounds.Width > screenSize.X)
             {
-                x = screenSize.X - objectBounds.Width;
-                _Direction = new Vector2(_Direction.X * -1, _Direction.Y);
-                _Speed = GetRandomSpeed();
+                for (var index = _GoalListeners.Count - 1; index >= 0; index--)
+                {
+                    IBallGoalListener listener = _GoalListeners[index];
+                    listener.OnGoal(true);
+                }
+                return;
             }
+
             if (objectBounds.Y < 0)
             {
                 y = 0;
                 _Direction = new Vector2(_Direction.X, _Direction.Y * -1);
-                _Speed = GetRandomSpeed();
             }
             else if (objectBounds.Y + objectBounds.Height > screenSize.Y)
             {
                 y = screenSize.Y - objectBounds.Height;
                 _Direction = new Vector2(_Direction.X, _Direction.Y * -1);
-                _Speed = GetRandomSpeed();
             }
             Position = new Vector2(x, y);
         }
@@ -164,13 +208,44 @@ namespace Pong.Ball.Balls
         {
             if (!_Active) return;
             Position += _Direction * _Speed * (Single)gameTime.ElapsedGameTime.TotalSeconds;
-            KeepWithinScreen(BoundingRect, _ScreenSize);
+            CheckScreenBounds(BoundingRect, _ScreenSize);
         }
 
         public Boolean Enabled => true;
         public Int32 UpdateOrder { get; }
         public event EventHandler<EventArgs> EnabledChanged;
         public event EventHandler<EventArgs> UpdateOrderChanged;
+
+        #endregion
+
+        #region Implementation of INotifer<IBallListener>
+
+        private readonly List<IBallGoalListener> _GoalListeners = new List<IBallGoalListener>();
+
+        public void AddListener(IBallGoalListener listener)
+        {
+            if (!_GoalListeners.Contains(listener)) _GoalListeners.Add(listener);
+        }
+
+        public void RemoveListener(IBallGoalListener listener)
+        {
+            if (_GoalListeners.Contains(listener)) _GoalListeners.Remove(listener);
+        }
+
+        #endregion
+
+        #region Implementation of INotifer<IBallMovementListener>
+        private readonly List<IBallMovementListener> _MoveListeners = new List<IBallMovementListener>();
+
+        public void AddListener(IBallMovementListener listener)
+        {
+            if (!_MoveListeners.Contains(listener)) _MoveListeners.Add(listener);
+        }
+
+        public void RemoveListener(IBallMovementListener listener)
+        {
+            if (_MoveListeners.Contains(listener)) _MoveListeners.Remove(listener);
+        }
 
         #endregion
     }
