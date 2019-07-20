@@ -20,8 +20,6 @@ namespace Pong.Player
 
         private readonly Vector2 _ScreenSize;
 
-        private readonly Single _Speed;
-
         private Vector2 _Direction;
 
         private Vector2 _Position;
@@ -39,20 +37,27 @@ namespace Pong.Player
         /// <summary> Bounds of the collider </summary>
         public Rectangle BoundingRect { get; private set;  }
 
-        public NormalPlayer(IContentService contentService, IRenderService renderService, IPhysicsService physicsService, IUpdateService updateService, IInputService inputService, Vector2 screenSize)
+        /// <summary> The collision group this collider belongs to, used to only check collisions between particular groups </summary>
+        public CollisionGroup CollisionGroup { get; }
+
+        /// <summary> Speed the collider is traveling </summary>
+        public Single Speed { get; private set; }
+
+        public NormalPlayer(IContentService contentService, IRenderService renderService, IUpdateService updateService, IPhysicsService physicsService, IInputService inputService, Vector2 screenSize)
         {
             _Texture = contentService.Load<Texture2D>(Data.Assets.Player);
             _StartPosition = new Vector2(200, 540 - _Texture.Height / 2);
             Position = _StartPosition;
             _ScreenSize = screenSize;
-            _Speed = 650f;
+            Speed = 650f;
+            CollisionGroup = CollisionGroup.PADDLE;
             renderService.Register(this);
             updateService.Register(this);
+            physicsService.RegisterCollider(this);
             inputService.AddListener(this);
         }
 
         #region Implementation of ICollider
-
 
         /// <summary>
         /// Cause collision behaviour
@@ -82,7 +87,7 @@ namespace Pong.Player
 
         public void Update(GameTime gameTime)
         {
-            Position += new Vector2(0, _Direction.Y) * _Speed * (Single)gameTime.ElapsedGameTime.TotalSeconds;
+            Position += new Vector2(0, _Direction.Y) * Speed * (Single)gameTime.ElapsedGameTime.TotalSeconds;
             if (Position.Y < 0) Position = new Vector2(Position.X, 0);
             else if (Position.Y + _Texture.Height > _ScreenSize.Y) Position = new Vector2(Position.X, _ScreenSize.Y - _Texture.Height);
         }

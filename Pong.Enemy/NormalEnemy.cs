@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Configuration;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pong.Interfaces.Content;
@@ -6,6 +7,7 @@ using Pong.Interfaces.Core;
 using Pong.Interfaces.Enemy;
 using Pong.Interfaces.Graphics;
 using Pong.Interfaces.Physics.Colliders;
+using Pong.Interfaces.Physics.Service;
 
 namespace Pong.Enemy
 {
@@ -15,11 +17,11 @@ namespace Pong.Enemy
 
         private readonly Vector2 _StartPosition;
 
+        private readonly Vector2 _ScreenSize;
+
         private Vector2 _Position;
 
         private Vector2 _Direction;
-
-        private Single _Speed;
 
         public Vector2 Position
         {
@@ -36,14 +38,23 @@ namespace Pong.Enemy
         /// <summary> Bounds of the collider </summary>
         public Rectangle BoundingRect { get; private set; }
 
-        public NormalEnemy(IContentService contentService, IRenderService renderService, IUpdateService updateService, Vector2 screenSize)
+        /// <summary> The collision group this collider belongs to, used to only check collisions between particular groups </summary>
+        public CollisionGroup CollisionGroup { get; }
+
+        /// <summary> Speed the collider is traveling </summary>
+        public Single Speed { get; private set; }
+
+        public NormalEnemy(IContentService contentService, IRenderService renderService, IUpdateService updateService, IPhysicsService physicsService, Vector2 screenSize)
         {
             _Texture = contentService.Load<Texture2D>(Data.Assets.Enemy);
-            _Speed = 600f;
+            Speed = 600f;
+            _ScreenSize = screenSize;
             _StartPosition = new Vector2(1688, 540 - _Texture.Height / 2);
             Position = _StartPosition;
+            CollisionGroup = CollisionGroup.PADDLE;
             renderService.Register(this);
             updateService.Register(this);
+            physicsService.RegisterCollider(this);
         }
 
         /// <summary>

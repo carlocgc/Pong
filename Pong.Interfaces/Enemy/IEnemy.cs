@@ -5,7 +5,7 @@ using Pong.Interfaces.Roles;
 
 namespace Pong.Interfaces.Enemy
 {
-    public interface IEnemy : ICollider, IRenderable, IUpdateable, IResetable
+    public interface IEnemy : ICollider, IRenderable, IUpdateable, IResetable, ITransform
     {
     }
 }

@@ -6,7 +6,7 @@ using Pong.Interfaces.Roles;
 
 namespace Pong.Interfaces.Ball
 {
-    public interface IBall : ICollider, IRenderable, IDisposable, IUpdateable, IResetable
+    public interface IBall : ICollider, IRenderable, IDisposable, IUpdateable, IResetable, ITransform
     {
         /// <summary> Start ball behaviour </summary>
         void Start();

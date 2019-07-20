@@ -5,7 +5,7 @@ using Pong.Interfaces.Roles;
 
 namespace Pong.Interfaces.Player
 {
-    public interface IPlayer : ICollider, IRenderable, IUpdateable, IResetable
+    public interface IPlayer : ICollider, IRenderable, IUpdateable, IResetable, ITransform
     {
     }
 }

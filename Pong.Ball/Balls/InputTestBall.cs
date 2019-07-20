@@ -41,6 +41,12 @@ namespace Pong.Ball.Balls
         /// <summary> The position of the ball </summary>
         public Vector2 Position { get; set; }
 
+        /// <summary> Rectangular bounds of the collider </summary>
+        public Rectangle BoundingRect => new Rectangle(Position.ToPoint(), new Point(_Texture.Width, _Texture.Height));
+
+        /// <summary> The collision group this collider belongs to, used to only check collisions between particular groups </summary>
+        public CollisionGroup CollisionGroup { get; }
+
         public InputTestBall(IContentService contentService, IRenderService renderService, IUpdateService updateService, Vector2 screenDimensions, IInputService inputService)
         {
             _Texture = contentService.Load<Texture2D>(Data.Assets.Ball);
@@ -56,9 +62,6 @@ namespace Pong.Ball.Balls
 
         #region Implementation of ICollider
 
-        /// <summary> Rectangular bounds of the collider </summary>
-        public Rectangle BoundingRect => new Rectangle(Position.ToPoint(), new Point(_Texture.Width, _Texture.Height));
-
         /// <summary>
         /// Cause collision behaviour
         /// </summary>
@@ -66,7 +69,6 @@ namespace Pong.Ball.Balls
         /// <returns></returns>
         public void Collide(ICollider collider)
         {
-            // TODO Bounce off the collided object
         }
 
         #endregion

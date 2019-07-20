@@ -2,10 +2,11 @@
 using Microsoft.Xna.Framework.Graphics;
 using Pong.Interfaces.Ball;
 using Pong.Interfaces.Content;
-using Pong.Interfaces.Physics.Colliders;
-using System;
 using Pong.Interfaces.Core;
 using Pong.Interfaces.Graphics;
+using Pong.Interfaces.Physics.Colliders;
+using Pong.Interfaces.Physics.Service;
+using System;
 
 namespace Pong.Ball.Balls
 {
@@ -26,32 +27,49 @@ namespace Pong.Ball.Balls
         private readonly Single _MinSpeed;
         /// <summary> Max travel speed </summary>
         private readonly Single _MaxSpeed;
-        /// <summary> Current travel speed </summary>
-        private Single _Speed;
         /// <summary> Whether the ball is active/moving </summary>
         private Boolean _Active;
         /// <summary> THe direction the ball is moving </summary>
         private Vector2 _Direction;
 
-        /// <summary> The position of the ball </summary>
-        public Vector2 Position { get; set; }
+        private Vector2 _Position;
 
-        public NormalBall(IContentService contentService, IRenderService renderService, IUpdateService updateService, Vector2 screenDimensions)
+        /// <summary> The position of the ball </summary>
+        public Vector2 Position
+        {
+            get => _Position;
+            set
+            {
+                _Position = value;
+                BoundingRect = new Rectangle((Int32)Position.X, (Int32)Position.Y, _Texture.Width, _Texture.Height);
+            }
+        }
+
+        /// <summary> The collision group this collider belongs to, used to only check collisions between particular groups </summary>
+        public CollisionGroup CollisionGroup { get; private set; }
+
+        /// <summary> Speed the collider is traveling </summary>
+        public Single Speed { get; private set; }
+
+        /// <summary> Rectangular bounds of the collider </summary>
+        public Rectangle BoundingRect { get; private set; }
+
+        public NormalBall(IContentService contentService, IRenderService renderService, IUpdateService updateService, IPhysicsService physicsService, Vector2 screenSize)
         {
             _Texture = contentService.Load<Texture2D>(Data.Assets.Ball);
-            _ScreenSize = screenDimensions;
+            _ScreenSize = screenSize;
+
             _MinSpeed = 500;
             _MaxSpeed = 1000;
-            _Speed = GetRandomSpeed();
+            Speed = GetRandomSpeed();
             Position = _StartPosition = _ScreenSize / 2;
+            CollisionGroup = CollisionGroup.BALL;
             updateService.Register(this);
             renderService.Register(this);
+            physicsService.RegisterCollider(this);
         }
 
         #region Implementation of ICollider
-
-        /// <summary> Rectangular bounds of the collider </summary>
-        public Rectangle BoundingRect => new Rectangle(Position.ToPoint(), new Point(_Texture.Width, _Texture.Height));
 
         /// <summary>
         /// Cause collision behaviour
@@ -60,7 +78,37 @@ namespace Pong.Ball.Balls
         /// <returns></returns>
         public void Collide(ICollider collider)
         {
-            // TODO Bounce off the collided object
+            Vector2 postColPos = Position;
+
+            // Move ball so it is no longer intersecting and invert its movement direction
+
+            if (BoundingRect.Center.Y < collider.BoundingRect.Top) // Ball is above the collider
+            {
+                postColPos = new Vector2(postColPos.X, collider.BoundingRect.Top - BoundingRect.Height);
+                _Direction.Y *= -1;
+                return;
+            }
+            if (BoundingRect.Center.Y > collider.BoundingRect.Bottom) // Ball is below the collider
+            {
+                postColPos = new Vector2(postColPos.X, collider.BoundingRect.Bottom);
+                _Direction.Y *= -1;
+                return;
+            }
+
+            if (BoundingRect.Center.X > collider.BoundingRect.Right) // Ball is on the right side of a collider
+            {
+                postColPos = new Vector2(collider.BoundingRect.Right, postColPos.Y);
+                _Direction.X *= -1;
+            }
+            else if (BoundingRect.Center.X < collider.BoundingRect.Left) // Ball is on the left side of a collider
+            {
+                postColPos = new Vector2(collider.BoundingRect.Left - BoundingRect.Width, postColPos.Y);
+                _Direction.X *= -1;
+            }
+
+
+
+            Position = postColPos;
         }
 
         #endregion
@@ -91,7 +139,7 @@ namespace Pong.Ball.Balls
         /// <param name="spriteBatch"></param>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_Texture, Position, Color.White);
+            spriteBatch.Draw(_Texture, BoundingRect, Color.White);
         }
 
         #endregion
@@ -122,7 +170,7 @@ namespace Pong.Ball.Balls
         }
 
         /// <summary>
-        /// returns whether the 
+        /// returns whether the
         /// </summary>
         /// <param name="objectBounds"></param>
         /// <param name="screenSize"></param>
@@ -135,25 +183,25 @@ namespace Pong.Ball.Balls
             {
                 x = 0;
                 _Direction = new Vector2(_Direction.X * -1, _Direction.Y);
-                _Speed = GetRandomSpeed();
+                Speed = GetRandomSpeed();
             }
             else if (objectBounds.X + objectBounds.Width > screenSize.X)
             {
                 x = screenSize.X - objectBounds.Width;
                 _Direction = new Vector2(_Direction.X * -1, _Direction.Y);
-                _Speed = GetRandomSpeed();
+                Speed = GetRandomSpeed();
             }
             if (objectBounds.Y < 0)
             {
                 y = 0;
                 _Direction = new Vector2(_Direction.X, _Direction.Y * -1);
-                _Speed = GetRandomSpeed();
+                Speed = GetRandomSpeed();
             }
             else if (objectBounds.Y + objectBounds.Height > screenSize.Y)
             {
                 y = screenSize.Y - objectBounds.Height;
                 _Direction = new Vector2(_Direction.X, _Direction.Y * -1);
-                _Speed = GetRandomSpeed();
+                Speed = GetRandomSpeed();
             }
             Position = new Vector2(x, y);
         }
@@ -163,7 +211,7 @@ namespace Pong.Ball.Balls
         public void Update(GameTime gameTime)
         {
             if (!_Active) return;
-            Position += _Direction * _Speed * (Single)gameTime.ElapsedGameTime.TotalSeconds;
+            Position += _Direction * Speed * (Single)gameTime.ElapsedGameTime.TotalSeconds;
             KeepWithinScreen(BoundingRect, _ScreenSize);
         }
 

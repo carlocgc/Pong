@@ -61,6 +61,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Roles\INotifer.cs" />
     <Compile Include="Roles\IResetable.cs" />
+    <Compile Include="Roles\ITransform.cs" />
     <Compile Include="Table\ITable.cs" />
     <Compile Include="UI\ILoadingScreen.cs" />
     <Compile Include="UI\ILoadingScreenListener.cs" />
