@@ -30,11 +30,6 @@ namespace Pong.Core.Common.States
             _Ball.Start();
         }
 
-        public override void OnExit()
-        {
-            base.OnExit();
-        }
-
         #endregion
     }
 }

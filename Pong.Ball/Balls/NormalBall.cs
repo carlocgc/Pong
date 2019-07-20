@@ -23,10 +23,8 @@ namespace Pong.Ball.Balls
         private readonly Vector2 _ScreenSize;
         /// <summary> The center of the screen </summary>
         private readonly Vector2 _StartPosition;
-        /// <summary> Min travel speed </summary>
-        private readonly Single _MinSpeed;
-        /// <summary> Max travel speed </summary>
-        private readonly Single _MaxSpeed;
+        /// <summary> Base movement speed </summary>
+        private readonly Single _Speed;
         /// <summary> Whether the ball is active/moving </summary>
         private Boolean _Active;
         /// <summary> THe direction the ball is moving </summary>
@@ -46,10 +44,7 @@ namespace Pong.Ball.Balls
         }
 
         /// <summary> The collision group this collider belongs to, used to only check collisions between particular groups </summary>
-        public CollisionGroup CollisionGroup { get; private set; }
-
-        /// <summary> Speed the collider is traveling </summary>
-        public Single Speed { get; private set; }
+        public CollisionGroup CollisionGroup { get; }
 
         /// <summary> Rectangular bounds of the collider </summary>
         public Rectangle BoundingRect { get; private set; }
@@ -58,15 +53,12 @@ namespace Pong.Ball.Balls
         {
             _Texture = contentService.Load<Texture2D>(Data.Assets.Ball);
             _ScreenSize = screenSize;
-
-            _MinSpeed = 500;
-            _MaxSpeed = 1000;
-            Speed = GetRandomSpeed();
+            _Speed = 700f;
             Position = _StartPosition = _ScreenSize / 2;
             CollisionGroup = CollisionGroup.BALL;
             updateService.Register(this);
             renderService.Register(this);
-            physicsService.RegisterCollider(this);
+            physicsService.Register(this);
         }
 
         #region Implementation of ICollider
@@ -105,8 +97,6 @@ namespace Pong.Ball.Balls
                 postColPos = new Vector2(collider.BoundingRect.Left - BoundingRect.Width, postColPos.Y);
                 _Direction.X *= -1;
             }
-
-
 
             Position = postColPos;
         }
@@ -162,13 +152,6 @@ namespace Pong.Ball.Balls
             return new Vector2(x, y);
         }
 
-        /// <summary> Gets a random speed between min and max speed</summary>
-        /// <returns></returns>
-        private Single GetRandomSpeed()
-        {
-            return _Rand.Next((Int32)_MinSpeed, (Int32)_MaxSpeed);
-        }
-
         /// <summary>
         /// returns whether the
         /// </summary>
@@ -183,25 +166,21 @@ namespace Pong.Ball.Balls
             {
                 x = 0;
                 _Direction = new Vector2(_Direction.X * -1, _Direction.Y);
-                Speed = GetRandomSpeed();
             }
             else if (objectBounds.X + objectBounds.Width > screenSize.X)
             {
                 x = screenSize.X - objectBounds.Width;
                 _Direction = new Vector2(_Direction.X * -1, _Direction.Y);
-                Speed = GetRandomSpeed();
             }
             if (objectBounds.Y < 0)
             {
                 y = 0;
                 _Direction = new Vector2(_Direction.X, _Direction.Y * -1);
-                Speed = GetRandomSpeed();
             }
             else if (objectBounds.Y + objectBounds.Height > screenSize.Y)
             {
                 y = screenSize.Y - objectBounds.Height;
                 _Direction = new Vector2(_Direction.X, _Direction.Y * -1);
-                Speed = GetRandomSpeed();
             }
             Position = new Vector2(x, y);
         }
@@ -211,7 +190,7 @@ namespace Pong.Ball.Balls
         public void Update(GameTime gameTime)
         {
             if (!_Active) return;
-            Position += _Direction * Speed * (Single)gameTime.ElapsedGameTime.TotalSeconds;
+            Position += _Direction * _Speed * (Single)gameTime.ElapsedGameTime.TotalSeconds;
             KeepWithinScreen(BoundingRect, _ScreenSize);
         }
 

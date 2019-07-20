@@ -12,11 +12,11 @@ namespace Pong.Interfaces.Physics.Service
         /// <summary> Register a collider with the physics service </summary>
         /// <param name="collider"></param>
         /// <returns></returns>
-        void RegisterCollider(ICollider collider);
+        void Register(ICollider collider);
 
         /// <summary> Deregister a collider from the physics service </summary>
         /// <param name="collider"></param>
         /// <returns></returns>
-        void DeRegisterCollider(ICollider collider);
+        void Deregister(ICollider collider);
     }
 }

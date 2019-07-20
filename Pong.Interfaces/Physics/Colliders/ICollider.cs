@@ -21,9 +21,6 @@ namespace Pong.Interfaces.Physics.Colliders
         /// <summary> The collision group this collider belongs to, used to only check collisions between particular groups </summary>
         CollisionGroup CollisionGroup { get; }
 
-        /// <summary> Speed the collider is traveling </summary>
-        Single Speed { get; }
-
         /// <summary>
         /// Cause collision behaviour
         /// </summary>

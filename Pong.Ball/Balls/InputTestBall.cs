@@ -1,14 +1,14 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pong.Interfaces.Ball;
 using Pong.Interfaces.Content;
-using Pong.Interfaces.Physics.Colliders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Pong.Interfaces.Core;
 using Pong.Interfaces.Graphics;
 using Pong.Interfaces.Input;
+using Pong.Interfaces.Physics.Colliders;
 
 namespace Pong.Ball.Balls
 {

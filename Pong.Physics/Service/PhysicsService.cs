@@ -25,7 +25,7 @@ namespace Pong.Physics.Service
         /// <summary> Register a collider with the physics service </summary>
         /// <param name="collider"></param>
         /// <returns></returns>
-        public void RegisterCollider(ICollider collider)
+        public void Register(ICollider collider)
         {
             if (!_Colliders.Contains(collider)) _Colliders.Add(collider);
         }
@@ -33,7 +33,7 @@ namespace Pong.Physics.Service
         /// <summary> Deregister a collider from the physics service </summary>
         /// <param name="collider"></param>
         /// <returns></returns>
-        public void DeRegisterCollider(ICollider collider)
+        public void Deregister(ICollider collider)
         {
             if (_Colliders.Contains(collider)) _Colliders.Remove(collider);
         }

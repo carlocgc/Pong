@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net.Configuration;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pong.Interfaces.Content;
@@ -18,6 +17,8 @@ namespace Pong.Enemy
         private readonly Vector2 _StartPosition;
 
         private readonly Vector2 _ScreenSize;
+
+        private readonly Single _Speed;
 
         private Vector2 _Position;
 
@@ -41,20 +42,17 @@ namespace Pong.Enemy
         /// <summary> The collision group this collider belongs to, used to only check collisions between particular groups </summary>
         public CollisionGroup CollisionGroup { get; }
 
-        /// <summary> Speed the collider is traveling </summary>
-        public Single Speed { get; private set; }
-
         public NormalEnemy(IContentService contentService, IRenderService renderService, IUpdateService updateService, IPhysicsService physicsService, Vector2 screenSize)
         {
             _Texture = contentService.Load<Texture2D>(Data.Assets.Enemy);
-            Speed = 600f;
+            _Speed = 600f;
             _ScreenSize = screenSize;
             _StartPosition = new Vector2(1688, 540 - _Texture.Height / 2);
             Position = _StartPosition;
             CollisionGroup = CollisionGroup.PADDLE;
             renderService.Register(this);
             updateService.Register(this);
-            physicsService.RegisterCollider(this);
+            physicsService.Register(this);
         }
 
         /// <summary>
