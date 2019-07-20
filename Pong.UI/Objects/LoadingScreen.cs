@@ -11,23 +11,28 @@ namespace Pong.UI.Objects
 {
     public class LoadingScreen : ILoadingScreen
     {
+        private readonly SpriteFont _TitleFont;
         private readonly Texture2D _Screen;
         private readonly IRenderService _RenderService;
         private readonly IUpdateService _UpdateService;
+        private readonly TimeSpan _DisplayDuration;
+        private readonly Vector2 _TitleOrigin;
 
         private Boolean _Active;
-
-        private TimeSpan _DisplayDuration;
         private TimeSpan _ElapsedTime;
 
         public LoadingScreen(IContentService contentService, IRenderService renderService, IUpdateService updateService)
         {
             _Screen = contentService.Load<Texture2D>(Data.Assets.StartScreen);
+            _TitleFont = contentService.Load<SpriteFont>(Data.Assets.TitleFont);
+
+            _TitleOrigin = new Vector2(960, 540);
+            _DisplayDuration = TimeSpan.FromSeconds(5);
+
             _RenderService = renderService;
             _UpdateService = updateService;
             _RenderService.Register(this);
             _UpdateService.Register(this);
-            _DisplayDuration = TimeSpan.FromSeconds(3);
         }
 
         #region Implementation of ILoadingScreen
@@ -42,7 +47,7 @@ namespace Pong.UI.Objects
         #region Implementation of INotifer<ILoadingScreenListener>
 
         private readonly List<ILoadingScreenListener> _Listeners = new List<ILoadingScreenListener>();
-        
+
 
         public void AddListener(ILoadingScreenListener listener)
         {
@@ -61,10 +66,14 @@ namespace Pong.UI.Objects
         /// <summary> Draws the object to screen </summary>
         /// <param name="gameTime"></param>
         /// <param name="spriteBatch"></param>
-        /// <param name="matrix"></param>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_Screen, new Vector2(0,0), Color.White);
+            // Center align title text
+            Vector2 textSize = _TitleFont.MeasureString(Data.Strings.Title);
+            Vector2 titlePosition = new Vector2(_TitleOrigin.X - textSize.X / 2, _TitleOrigin.Y - textSize.Y / 2);
+
+            spriteBatch.Draw(_Screen, new Vector2(0, 0), Color.Black);
+            spriteBatch.DrawString(_TitleFont, Data.Strings.Title, titlePosition, Color.White);
         }
 
         #endregion
@@ -79,7 +88,7 @@ namespace Pong.UI.Objects
 
             _Active = false;
             _ElapsedTime = TimeSpan.Zero;
-            
+
             for (var index = _Listeners.Count - 1; index >= 0; index--)
             {
                 ILoadingScreenListener listener = _Listeners[index];
