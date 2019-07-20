@@ -16,6 +16,8 @@ namespace Pong.UI.Objects
 
         private readonly Vector2 _EnemyScoreOrigin;
 
+        private readonly Vector2 _ScoreDivideOrigin;
+
         #region Implementation of IScoreboard
 
         public Int32 PlayerScore { get; set; }
@@ -27,6 +29,7 @@ namespace Pong.UI.Objects
             _Scorefont = contentService.Load<SpriteFont>(Data.Assets.ScoreFont);
             _PlayerScoreOrigin = new Vector2(800, 50);
             _EnemyScoreOrigin = new Vector2(1120, 50);
+            _ScoreDivideOrigin = new Vector2(960, 50);
             PlayerScore = 0;
             EnemyScore = 0;
             renderService.Register(this);
@@ -51,8 +54,12 @@ namespace Pong.UI.Objects
             // Right align player score to origin position
             Vector2 playerScorePosition = new Vector2(_PlayerScoreOrigin.X - _Scorefont.MeasureString(PlayerScore.ToString()).X, _PlayerScoreOrigin.Y);
 
+            Vector2 scoreDivideSize = _Scorefont.MeasureString(Data.Strings.ScoreDivide);
+            Vector2 scoreDividePos = new Vector2(_ScoreDivideOrigin.X - scoreDivideSize.X / 2, _ScoreDivideOrigin.Y);
+
             spriteBatch.DrawString(_Scorefont, PlayerScore.ToString(), playerScorePosition, Color.White);
             spriteBatch.DrawString(_Scorefont, EnemyScore.ToString(), _EnemyScoreOrigin, Color.White);
+            spriteBatch.DrawString(_Scorefont, Data.Strings.ScoreDivide, scoreDividePos, Color.White);
         }
 
         #endregion

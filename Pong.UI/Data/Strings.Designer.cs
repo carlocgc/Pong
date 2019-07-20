@@ -61,6 +61,15 @@ namespace Pong.UI.Data {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to :.
+        /// </summary>
+        internal static string ScoreDivide {
+            get {
+                return ResourceManager.GetString("ScoreDivide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PONG.
         /// </summary>
         internal static string Title {
