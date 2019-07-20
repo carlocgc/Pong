@@ -45,7 +45,7 @@ namespace Pong.Enemy
         public NormalEnemy(IContentService contentService, IRenderService renderService, IUpdateService updateService, IPhysicsService physicsService, Vector2 screenSize)
         {
             _Texture = contentService.Load<Texture2D>(Data.Assets.Enemy);
-            _Speed = 600f;
+            _Speed = 800f;
             _ScreenSize = screenSize;
             _StartPosition = new Vector2(1688, 540 - _Texture.Height / 2);
             Position = _StartPosition;
@@ -83,7 +83,9 @@ namespace Pong.Enemy
 
         public void Update(GameTime gameTime)
         {
-
+            Position += _Direction * _Speed * (Single)gameTime.ElapsedGameTime.TotalSeconds;
+            if (Position.Y < 0) Position = new Vector2(Position.X, 0);
+            else if (Position.Y + _Texture.Height > _ScreenSize.Y) Position = new Vector2(Position.X, _ScreenSize.Y - _Texture.Height);
         }
 
         #endregion
@@ -101,7 +103,18 @@ namespace Pong.Enemy
 
         public void Reset()
         {
+            Position = _StartPosition;
+        }
 
+        #endregion
+
+        #region Implementation of IBallMovementListener
+
+        public void OnBallMoved(Vector2 position)
+        {
+            Vector2 direction = position - Position;
+            direction.Normalize();
+            _Direction = new Vector2(0, direction.Y);
         }
 
         #endregion

@@ -25,6 +25,13 @@
 /processorParam:TextureFormat=Color
 /build:../Assets/Graphics/background.png;Graphics/background.png
 
+#begin Fonts/SaucerBB.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/SaucerBB.spritefont
+
 #begin Graphics/background.png
 /importer:TextureImporter
 /processor:TextureProcessor
