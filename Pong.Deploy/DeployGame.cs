@@ -75,6 +75,7 @@ namespace Pong.Deploy
             _Mediator.RegisterService<IStateService, StateService>(new StateService(_UpdateService));
 
             _Mediator.RegisterCreator<ILoadingScreen>(() => new LoadingScreen(_ContentService, _RenderService, _UpdateService));
+            _Mediator.RegisterCreator<IScoreboard>(() => new Scoreboard(_ContentService, _RenderService, _UpdateService));
             _Mediator.RegisterCreator<ITable>(() => new NormalTable(_ContentService, _RenderService, _UpdateService));
             _Mediator.RegisterCreator<IBall>(() => new NormalBall(_ContentService, _RenderService, _UpdateService, _PhysicsService, _VirtualWindowScale));
             _Mediator.RegisterCreator<IPlayer>(() => new NormalPlayer(_ContentService, _RenderService, _UpdateService, _PhysicsService, _InputService, _VirtualWindowScale));
