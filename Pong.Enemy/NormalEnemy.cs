@@ -45,7 +45,7 @@ namespace Pong.Enemy
         public NormalEnemy(IContentService contentService, IRenderService renderService, IUpdateService updateService, IPhysicsService physicsService, Vector2 screenSize)
         {
             _Texture = contentService.Load<Texture2D>(Data.Assets.Enemy);
-            _Speed = 800f;
+            _Speed = 875;
             _ScreenSize = screenSize;
             _StartPosition = new Vector2(1688, 540);
             Position = _StartPosition;
