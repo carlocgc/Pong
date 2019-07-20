@@ -1,17 +1,10 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Pong.Android.Source.Services;
-using Pong.Ball.Balls;
+using Pong.Core.Common.Services;
 using Pong.Deploy;
-using Pong.Enemy;
-using Pong.Interfaces.Ball;
-using Pong.Interfaces.Enemy;
+using Pong.Interfaces.Core;
 using Pong.Interfaces.Input;
-using Pong.Interfaces.Player;
-using Pong.Interfaces.Table;
-using Pong.Interfaces.UI;
-using Pong.Player;
-using Pong.Table.Tables;
-using Pong.UI.Objects;
 
 namespace Pong.Android
 {
@@ -20,8 +13,7 @@ namespace Pong.Android
     /// </summary>
     public class AndroidGame : DeployGame
     {
-
-        public AndroidGame() : base()
+        public AndroidGame()
         {
             _GraphicsDeviceManager.IsFullScreen = true;
             _GraphicsDeviceManager.PreferredBackBufferWidth = 1920;
@@ -35,17 +27,11 @@ namespace Pong.Android
         /// </summary>
         protected override void LoadContent()
         {
-            // TODO: use this.Content to load your game content here
-            base.LoadContent();
-
+            _SpriteBatch = new SpriteBatch(GraphicsDevice);
+            _UpdateService = _Mediator.RegisterService<IUpdateService, UpdateService>(new UpdateService());
             _InputService = _Mediator.RegisterService<IInputService, GyroInputService>(new GyroInputService(_UpdateService, Window.CurrentOrientation));
-            _Mediator.RegisterCreator<ILoadingScreen>(() => new LoadingScreen(_ContentService, _RenderService, _UpdateService));
-            _Mediator.RegisterCreator<ITable>(() => new NormalTable(_ContentService, _RenderService, _UpdateService));
-            _Mediator.RegisterCreator<IBall>(() => new NormalBall(_ContentService, _RenderService, _UpdateService, _PhysicsService, _VirtualWindowScale));
-            _Mediator.RegisterCreator<IPlayer>(() => new NormalPlayer(_ContentService, _RenderService, _UpdateService, _PhysicsService, _InputService, _VirtualWindowScale));
-            _Mediator.RegisterCreator<IEnemy>(() => new NormalEnemy(_ContentService, _RenderService, _UpdateService, _PhysicsService, _VirtualWindowScale));
 
-            _GameInstance.Init();
+            base.LoadContent();
         }
     }
 }

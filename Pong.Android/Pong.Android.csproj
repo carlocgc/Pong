@@ -64,6 +64,8 @@
     <Compile Include="Source\Services\GyroInputService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Fonts\SaucerBB.spritefont" />
+    <None Include="Content\Fonts\SaucerBB.ttf" />
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />

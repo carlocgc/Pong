@@ -106,6 +106,8 @@
     </None>
     <None Include="app.config" />
     <None Include="app.manifest" />
+    <None Include="Content\Fonts\SaucerBB.spritefont" />
+    <None Include="Content\Fonts\SaucerBB.ttf" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pong.Ball\Pong.Ball.csproj">

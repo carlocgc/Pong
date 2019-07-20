@@ -38,6 +38,9 @@ namespace Pong.Core.Common.States
 
         public void OnGoal(Boolean playerScored)
         {
+
+
+
             _Player.Reset();
             _Enemy.Reset();
             _Ball.Reset();

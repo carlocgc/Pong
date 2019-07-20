@@ -61,6 +61,15 @@ namespace Pong.UI.Data {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fonts/SaucerBB.
+        /// </summary>
+        internal static string ScoreFont {
+            get {
+                return ResourceManager.GetString("ScoreFont", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Graphics/startscreen.
         /// </summary>
         internal static string StartScreen {

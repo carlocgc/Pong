@@ -1,18 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Pong.Ball.Balls;
+using Pong.Core.Common.Services;
 using Pong.Deploy;
-using Pong.Enemy;
 using Pong.Input;
-using Pong.Interfaces.Ball;
-using Pong.Interfaces.Enemy;
+using Pong.Interfaces.Core;
 using Pong.Interfaces.Input;
-using Pong.Interfaces.Player;
-using Pong.Interfaces.Table;
-using Pong.Interfaces.UI;
-using Pong.Player;
-using Pong.Table.Tables;
-using Pong.UI.Objects;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
 
 namespace Pong.Desktop
@@ -22,23 +15,10 @@ namespace Pong.Desktop
     /// </summary>
     public class DesktopGame : DeployGame
     {
-        public DesktopGame() : base()
+        public DesktopGame()
         {
             _GraphicsDeviceManager.PreferredBackBufferWidth = 1280;
             _GraphicsDeviceManager.PreferredBackBufferHeight = 720;
-        }
-
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
-        protected override void Initialize()
-        {
-            // TODO: Add Desktop specific initialization
-
-            base.Initialize();
         }
 
         /// <summary>
@@ -49,16 +29,12 @@ namespace Pong.Desktop
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             // TODO: use this.Content to load your game content here
-            base.LoadContent();
 
+            _SpriteBatch = new SpriteBatch(GraphicsDevice);
+            _UpdateService = _Mediator.RegisterService<IUpdateService, UpdateService>(new UpdateService());
             _InputService = _Mediator.RegisterService<IInputService, GamePadInputService>(new GamePadInputService(_UpdateService));
-            _Mediator.RegisterCreator<ILoadingScreen>(() => new LoadingScreen(_ContentService, _RenderService, _UpdateService));
-            _Mediator.RegisterCreator<ITable>(() => new NormalTable(_ContentService, _RenderService, _UpdateService));
-            _Mediator.RegisterCreator<IBall>(() => new NormalBall(_ContentService, _RenderService, _UpdateService, _PhysicsService, _VirtualWindowScale));
-            _Mediator.RegisterCreator<IPlayer>(() => new NormalPlayer(_ContentService, _RenderService, _UpdateService, _PhysicsService, _InputService, _VirtualWindowScale));
-            _Mediator.RegisterCreator<IEnemy>(() => new NormalEnemy(_ContentService, _RenderService, _UpdateService, _PhysicsService, _VirtualWindowScale));
 
-            _GameInstance.Init();
+            base.LoadContent();
         }
 
         /// <summary>
@@ -83,17 +59,6 @@ namespace Pong.Desktop
             base.Update(gameTime);
 
             // TODO: Add your update logic here
-        }
-
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Draw(GameTime gameTime)
-        {
-            // TODO: Add your drawing code here
-
-            base.Draw(gameTime);
         }
     }
 }
