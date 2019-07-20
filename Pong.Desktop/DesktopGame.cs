@@ -2,8 +2,10 @@
 using Microsoft.Xna.Framework.Input;
 using Pong.Ball.Balls;
 using Pong.Deploy;
+using Pong.Enemy;
 using Pong.Input;
 using Pong.Interfaces.Ball;
+using Pong.Interfaces.Enemy;
 using Pong.Interfaces.Input;
 using Pong.Interfaces.Player;
 using Pong.Interfaces.Table;
@@ -54,6 +56,7 @@ namespace Pong.Desktop
             _Mediator.RegisterCreator<ITable>(() => new NormalTable(_ContentService, _RenderService, _UpdateService));
             _Mediator.RegisterCreator<IBall>(() => new NormalBall(_ContentService, _RenderService, _UpdateService, _VirtualWindowScale));
             _Mediator.RegisterCreator<IPlayer>(() => new NormalPlayer(_ContentService, _RenderService, _PhysicsService, _UpdateService, _InputService, _VirtualWindowScale));
+            _Mediator.RegisterCreator<IEnemy>(() => new NormalEnemy(_ContentService, _RenderService, _UpdateService, _VirtualWindowScale));
 
             _GameInstance.Init();
         }

@@ -99,6 +99,10 @@
       <Project>{A609603E-1962-4D38-B3D1-D6C99DEB1C3F}</Project>
       <Name>Pong.Deploy</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Pong.Enemy\Pong.Enemy.csproj">
+      <Project>{33EB2A83-1983-4127-B6C7-6E37B2231D7A}</Project>
+      <Name>Pong.Enemy</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Pong.Interfaces\Pong.Interfaces.csproj">
       <Project>{57D8D702-4E9E-4283-B5EF-CAF450C9AF24}</Project>
       <Name>Pong.Interfaces</Name>

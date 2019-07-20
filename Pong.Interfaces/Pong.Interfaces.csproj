@@ -48,6 +48,7 @@
     <Compile Include="Core\IState.cs" />
     <Compile Include="Core\IStateService.cs" />
     <Compile Include="Core\IUpdateService.cs" />
+    <Compile Include="Enemy\IEnemy.cs" />
     <Compile Include="Graphics\IRenderable.cs" />
     <Compile Include="Graphics\IRenderService.cs" />
     <Compile Include="Input\IButtonState.cs" />
@@ -64,8 +65,6 @@
     <Compile Include="UI\ILoadingScreen.cs" />
     <Compile Include="UI\ILoadingScreenListener.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Enemy\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
