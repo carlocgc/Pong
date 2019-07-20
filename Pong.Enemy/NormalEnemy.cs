@@ -30,7 +30,7 @@ namespace Pong.Enemy
             set
             {
                 _Position = value;
-                BoundingRect = new Rectangle((Int32)_Position.X, (Int32)_Position.Y, _Texture.Width, _Texture.Height);
+                BoundingRect = new Rectangle((Int32)_Position.X, (Int32)_Position.Y - _Texture.Height / 2, _Texture.Width, _Texture.Height);
             }
         }
 
@@ -47,7 +47,7 @@ namespace Pong.Enemy
             _Texture = contentService.Load<Texture2D>(Data.Assets.Enemy);
             _Speed = 800f;
             _ScreenSize = screenSize;
-            _StartPosition = new Vector2(1688, 540 - _Texture.Height / 2);
+            _StartPosition = new Vector2(1688, 540);
             Position = _StartPosition;
             CollisionGroup = CollisionGroup.PADDLE;
             renderService.Register(this);
@@ -84,8 +84,8 @@ namespace Pong.Enemy
         public void Update(GameTime gameTime)
         {
             Position += _Direction * _Speed * (Single)gameTime.ElapsedGameTime.TotalSeconds;
-            if (Position.Y < 0) Position = new Vector2(Position.X, 0);
-            else if (Position.Y + _Texture.Height > _ScreenSize.Y) Position = new Vector2(Position.X, _ScreenSize.Y - _Texture.Height);
+            if (BoundingRect.Y < 0) Position = new Vector2(Position.X, BoundingRect.Height / 2);
+            else if (BoundingRect.Y + BoundingRect.Height > _ScreenSize.Y) Position = new Vector2(BoundingRect.X, _ScreenSize.Y - BoundingRect.Height);
         }
 
         #endregion
