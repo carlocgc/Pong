@@ -10,33 +10,17 @@ namespace Pong.UI.Objects
 {
     public class Scoreboard : IScoreboard
     {
-
         private readonly SpriteFont _Scorefont;
 
-        private Vector2 _PlayerScoreOrigin;
+        private readonly Vector2 _PlayerScoreOrigin;
 
-        private Vector2 _EnemyScoreOrigin;
-
-        private Int32 _PlayerScore;
-
-        private Int32 _EnemyScore;
+        private readonly Vector2 _EnemyScoreOrigin;
 
         #region Implementation of IScoreboard
 
-        public Int32 PlayerScore
-        {
-            get => _PlayerScore;
-            set
-            {
-                _PlayerScore = value;
-            }
-        }
+        public Int32 PlayerScore { get; set; }
 
-        public Int32 EnemyScore
-        {
-            get => _EnemyScore;
-            set => _EnemyScore = value;
-        }
+        public Int32 EnemyScore { get; set; }
 
         public Scoreboard(IContentService contentService, IRenderService renderService, IUpdateService updateService)
         {
@@ -77,7 +61,6 @@ namespace Pong.UI.Objects
 
         public void Update(GameTime gameTime)
         {
-
         }
 
         public Boolean Enabled { get; }
