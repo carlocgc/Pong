@@ -1,3 +1,4 @@
+using System;
 using Android.App;
 using Android.Content.PM;
 using Android.OS;
@@ -16,12 +17,31 @@ namespace Pong.Android
         , ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.Keyboard | ConfigChanges.KeyboardHidden | ConfigChanges.ScreenSize | ConfigChanges.ScreenLayout)]
     public class PongActivity : Microsoft.Xna.Framework.AndroidGameActivity
     {
+
+        private AndroidGame _Game;
+        private View _View;
+
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-            var g = new AndroidGame();
-            SetContentView((View)g.Services.GetService(typeof(View)));
-            g.Run();
+            _Game = new AndroidGame();
+            _View = (View)_Game.Services.GetService(typeof(View));
+            SetContentView(_View);
+            _Game.Run();
+        }
+
+        #region Overrides of Activity
+
+        public override void OnWindowFocusChanged(Boolean hasFocus)
+        {
+            base.OnWindowFocusChanged(hasFocus);
+            if (hasFocus) SetImmersive();
+        }
+
+        #endregion
+        private void SetImmersive()
+        {
+            _View.SystemUiVisibility = (StatusBarVisibility)(SystemUiFlags.LayoutStable | SystemUiFlags.LayoutHideNavigation | SystemUiFlags.LayoutFullscreen | SystemUiFlags.HideNavigation | SystemUiFlags.Fullscreen | SystemUiFlags.ImmersiveSticky);
         }
     }
 }
