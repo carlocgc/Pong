@@ -27,7 +27,7 @@ namespace Pong.Core.Common.States
         {
             base.OnEnter();
 
-            _Mediator.GetInstance<IMusicService>().PlayMusic(Data.Sounds.Bgm);
+            _Mediator.GetInstance<IMusicService>().PlayMusic(Data.Sounds.Bgm, 0.7f);
 
             _Table = _Mediator.Create<ITable>();
             _Scoreboard = _Mediator.Create<IScoreboard>();

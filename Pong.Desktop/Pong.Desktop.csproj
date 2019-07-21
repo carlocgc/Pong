@@ -161,6 +161,8 @@
     <Content Include="Content\Graphics\paddle.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Sounds\PowerDown2.mp3" />
+    <Content Include="Content\Sounds\PowerUp15.mp3" />
     <Content Include="Content\Sounds\Puzzle-Dreams.mp3" />
     <Content Include="Content\Sounds\UI_Quirky32.mp3" />
   </ItemGroup>

@@ -48,12 +48,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Graphics.resx</DependentUpon>
     </Compile>
+    <Compile Include="Data\Sounds.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Sounds.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Data\Graphics.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Graphics.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\Sounds.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Sounds.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

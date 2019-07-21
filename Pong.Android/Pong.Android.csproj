@@ -65,6 +65,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Fonts\SaucerBB.spritefont" />
+    <Content Include="Content\Sounds\PowerDown2.mp3" />
+    <Content Include="Content\Sounds\PowerUp15.mp3" />
     <Content Include="Content\Sounds\Puzzle-Dreams.mp3" />
     <Content Include="Content\Sounds\UI_Quirky32.mp3" />
     <None Include="Content\Fonts\SaucerBB.ttf" />
