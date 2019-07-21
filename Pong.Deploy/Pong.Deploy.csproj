@@ -1,17 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>0412bf7a-81d2-49ad-990e-0a5fecce762d</ProjectGuid>
+    <ProjectGuid>{A609603E-1962-4D38-B3D1-D6C99DEB1C3F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Pong.Deploy</RootNamespace>
     <AssemblyName>Pong.Deploy</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,24 +32,72 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System"/>
-    
-    <Reference Include="System.Core"/>
-    <Reference Include="System.Xml.Linq"/>
-    <Reference Include="System.Data.DataSetExtensions"/>
-    
-    
-    <Reference Include="Microsoft.CSharp"/>
-    
-    <Reference Include="System.Data"/>
-    
-    <Reference Include="System.Net.Http"/>
-    
-    <Reference Include="System.Xml"/>
+    <Reference Include="Mono.Android">
+      <HintPath>S:\VisualStudio2019\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v9.0\Mono.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoGame.Framework, Version=3.7.1.189, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="DeployGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Pong.Ball\Pong.Ball.csproj">
+      <Project>{A477F570-7470-4AA6-8898-6A554585E729}</Project>
+      <Name>Pong.Ball</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pong.Content\Pong.Content.csproj">
+      <Project>{2638ECC8-BF35-4176-AC38-23713682173B}</Project>
+      <Name>Pong.Content</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pong.Core\Pong.Core.csproj">
+      <Project>{E7922478-A845-4EB2-AD66-1143B8AFE48F}</Project>
+      <Name>Pong.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pong.Enemy\Pong.Enemy.csproj">
+      <Project>{33EB2A83-1983-4127-B6C7-6E37B2231D7A}</Project>
+      <Name>Pong.Enemy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pong.Graphics\Pong.Graphics.csproj">
+      <Project>{389BB1EC-27DA-45DE-A71F-59063AF46208}</Project>
+      <Name>Pong.Graphics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pong.Input\Pong.Input.csproj">
+      <Project>{E288CCB5-B3BF-4730-A1FB-FE20353F6263}</Project>
+      <Name>Pong.Input</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pong.Interfaces\Pong.Interfaces.csproj">
+      <Project>{57D8D702-4E9E-4283-B5EF-CAF450C9AF24}</Project>
+      <Name>Pong.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pong.Mediation\Pong.Mediation.csproj">
+      <Project>{7C6A674E-E8BD-4FDE-A021-10D883AA2EF7}</Project>
+      <Name>Pong.Mediation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pong.Physics\Pong.Physics.csproj">
+      <Project>{D590DADB-F14A-4CEA-9804-56E9DCAEABCC}</Project>
+      <Name>Pong.Physics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pong.Player\Pong.Player.csproj">
+      <Project>{2ADA1175-E9D9-4A62-8FC0-3E5D6B3EF0C7}</Project>
+      <Name>Pong.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pong.Table\Pong.Table.csproj">
+      <Project>{9c4a8b49-daa2-479d-997a-5053ed3500b1}</Project>
+      <Name>Pong.Table</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pong.UI\Pong.UI.csproj">
+      <Project>{90F0D866-0F35-40B6-85AA-8044745AB163}</Project>
+      <Name>Pong.UI</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
- </Project>
+</Project>
