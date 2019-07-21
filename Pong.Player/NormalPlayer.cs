@@ -65,16 +65,7 @@ namespace Pong.Player
         /// <returns></returns>
         public void Collide(ICollider collider)
         {
-            Rectangle topEdge = new Rectangle(BoundingRect.Left, BoundingRect.Top, 1, 1);
-            Rectangle bottomEdge = new Rectangle(BoundingRect.Left, BoundingRect.Bottom, 1, 1);
-            if (collider.BoundingRect.Contains(topEdge))
-            {
-                Position = new Vector2(Position.X, collider.BoundingRect.Bottom);
-            }
-            else if (collider.BoundingRect.Contains(bottomEdge))
-            {
-                Position = new Vector2(Position.X, collider.BoundingRect.Top - BoundingRect.Height);
-            }
+
         }
 
         #endregion
