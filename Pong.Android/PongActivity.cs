@@ -6,7 +6,7 @@ using Android.Views;
 
 namespace Pong.Android
 {
-    [Activity(Label = "Pong.Android"
+    [Activity(Label = "Pong"
         , MainLauncher = true
         , Immersive = true
         , Icon = "@drawable/icon"
