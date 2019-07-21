@@ -77,7 +77,7 @@ namespace Pong.Ball.Balls
         {
             Vector2 postColPos = Position;
 
-            // Move ball so it is no longer intersecting and invert its movement direction
+            // Move ball so it is no longer intersecting and set a new direction
 
             if (BoundingRect.Center.Y < collider.BoundingRect.Top) // Ball is above the collider
             {
@@ -95,12 +95,12 @@ namespace Pong.Ball.Balls
             if (BoundingRect.Center.X > collider.BoundingRect.Right) // Ball is on the right side of a collider
             {
                 postColPos = new Vector2(collider.BoundingRect.Right, postColPos.Y);
-                _Direction.X *= -1;
+                _Direction.X = 1;
             }
             else if (BoundingRect.Center.X < collider.BoundingRect.Left) // Ball is on the left side of a collider
             {
                 postColPos = new Vector2(collider.BoundingRect.Left - BoundingRect.Width, postColPos.Y);
-                _Direction.X *= -1;
+                _Direction.X = -1;
             }
 
             Position = postColPos;
