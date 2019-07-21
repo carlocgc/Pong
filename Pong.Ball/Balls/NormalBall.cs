@@ -33,6 +33,12 @@ namespace Pong.Ball.Balls
         /// <summary> Position of the ball </summary>
         private Vector2 _Position;
 
+        /// <summary> Rectangular bounds of the collider </summary>
+        public Rectangle BoundingRect { get; private set; }
+
+        /// <summary> The collision group this collider belongs to, used to only check collisions between particular groups </summary>
+        public CollisionGroup CollisionGroup { get; }
+
         /// <summary> Position of the ball </summary>
         public Vector2 Position
         {
@@ -47,12 +53,6 @@ namespace Pong.Ball.Balls
                 }
             }
         }
-
-        /// <summary> Rectangular bounds of the collider </summary>
-        public Rectangle BoundingRect { get; private set; }
-
-        /// <summary> The collision group this collider belongs to, used to only check collisions between particular groups </summary>
-        public CollisionGroup CollisionGroup { get; }
 
         public NormalBall(IContentService contentService, IRenderService renderService, IUpdateService updateService, IPhysicsService physicsService, Vector2 screenSize)
         {
@@ -81,13 +81,13 @@ namespace Pong.Ball.Balls
 
             if (BoundingRect.Center.Y < collider.BoundingRect.Top) // Ball is above the collider
             {
-                postColPos = new Vector2(postColPos.X, collider.BoundingRect.Top - BoundingRect.Height);
+                Position = new Vector2(postColPos.X, collider.BoundingRect.Top - BoundingRect.Height);
                 _Direction.Y = -1;
                 return;
             }
             if (BoundingRect.Center.Y > collider.BoundingRect.Bottom) // Ball is below the collider
             {
-                postColPos = new Vector2(postColPos.X, collider.BoundingRect.Bottom);
+                Position = new Vector2(postColPos.X, collider.BoundingRect.Bottom);
                 _Direction.Y = 1;
                 return;
             }

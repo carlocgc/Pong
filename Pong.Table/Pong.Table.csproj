@@ -49,6 +49,7 @@
       <DependentUpon>Assets.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tables\ColourfulTable.cs" />
     <Compile Include="Tables\NormalTable.cs" />
   </ItemGroup>
   <ItemGroup>
