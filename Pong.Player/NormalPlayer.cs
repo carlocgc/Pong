@@ -44,7 +44,7 @@ namespace Pong.Player
 
         public NormalPlayer(IContentService contentService, IRenderService renderService, IUpdateService updateService, IPhysicsService physicsService, IInputService inputService, Vector2 screenSize)
         {
-            _Texture = contentService.Load<Texture2D>(Data.Assets.Player);
+            _Texture = contentService.Load<Texture2D>(Data.Graphics.Player);
             _StartPosition = new Vector2(200, 540 - _Texture.Height / 2);
             Position = _StartPosition;
             _ScreenSize = screenSize;

@@ -1,5 +1,6 @@
 ﻿using System;
 using Pong.Interfaces.Ball;
+using Pong.Interfaces.Core;
 using Pong.Interfaces.Enemy;
 using Pong.Interfaces.Mediator;
 using Pong.Interfaces.Player;
@@ -25,6 +26,9 @@ namespace Pong.Core.Common.States
         public override void OnEnter()
         {
             base.OnEnter();
+
+            _Mediator.GetInstance<IMusicService>().PlayMusic(Data.Sounds.Bgm);
+
             _Table = _Mediator.Create<ITable>();
             _Scoreboard = _Mediator.Create<IScoreboard>();
             _Player = _Mediator.Create<IPlayer>();

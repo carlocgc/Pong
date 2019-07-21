@@ -56,7 +56,7 @@ namespace Pong.Ball.Balls
 
         public NormalBall(IContentService contentService, IRenderService renderService, IUpdateService updateService, IPhysicsService physicsService, Vector2 screenSize)
         {
-            _Texture = contentService.Load<Texture2D>(Data.Assets.Ball);
+            _Texture = contentService.Load<Texture2D>(Data.Graphics.Ball);
             _ScreenSize = screenSize;
             _Speed = 700f;
             Position = _StartPosition = _ScreenSize / 2;

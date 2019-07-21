@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Pong.Ball.Data {
+namespace Pong.UI.Data {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Pong.Ball.Data {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Assets {
+    internal class Fonts {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Assets() {
+        internal Fonts() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Pong.Ball.Data {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Pong.Ball.Data.Assets", typeof(Assets).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Pong.UI.Data.Fonts", typeof(Fonts).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,11 +61,20 @@ namespace Pong.Ball.Data {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Graphics/ball.
+        ///   Looks up a localized string similar to Fonts/SaucerBB.
         /// </summary>
-        internal static string Ball {
+        internal static string ScoreFont {
             get {
-                return ResourceManager.GetString("Ball", resourceCulture);
+                return ResourceManager.GetString("ScoreFont", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fonts/SaucerBB.
+        /// </summary>
+        internal static string TitleFont {
+            get {
+                return ResourceManager.GetString("TitleFont", resourceCulture);
             }
         }
     }
