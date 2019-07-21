@@ -47,6 +47,7 @@
     <Compile Include="Ball\IBallGoalListener.cs" />
     <Compile Include="Ball\IBallMovementListener.cs" />
     <Compile Include="Content\IContentService.cs" />
+    <Compile Include="Core\IMusicService.cs" />
     <Compile Include="Core\IState.cs" />
     <Compile Include="Core\IStateService.cs" />
     <Compile Include="Core\IUpdateService.cs" />

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Pong.UI.Data {
+namespace Pong.Ball.Data {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Pong.UI.Data {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Assets {
+    internal class Sounds {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Assets() {
+        internal Sounds() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Pong.UI.Data {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Pong.UI.Data.Assets", typeof(Assets).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Pong.Ball.Data.Sounds", typeof(Sounds).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,29 +61,29 @@ namespace Pong.UI.Data {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonts/SaucerBB.
+        ///   Looks up a localized string similar to Sounds/PowerDown2.
         /// </summary>
-        internal static string ScoreFont {
+        internal static string EnemyScored {
             get {
-                return ResourceManager.GetString("ScoreFont", resourceCulture);
+                return ResourceManager.GetString("EnemyScored", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Graphics/background.
+        ///   Looks up a localized string similar to Sounds/UI_Quirky32.
         /// </summary>
-        internal static string StartScreen {
+        internal static string Impact {
             get {
-                return ResourceManager.GetString("StartScreen", resourceCulture);
+                return ResourceManager.GetString("Impact", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fonts/SaucerBB.
+        ///   Looks up a localized string similar to Sounds/PowerUp15.
         /// </summary>
-        internal static string TitleFont {
+        internal static string PlayerScored {
             get {
-                return ResourceManager.GetString("TitleFont", resourceCulture);
+                return ResourceManager.GetString("PlayerScored", resourceCulture);
             }
         }
     }

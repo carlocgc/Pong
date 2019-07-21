@@ -44,7 +44,7 @@ namespace Pong.Enemy
 
         public NormalEnemy(IContentService contentService, IRenderService renderService, IUpdateService updateService, IPhysicsService physicsService, Vector2 screenSize)
         {
-            _Texture = contentService.Load<Texture2D>(Data.Assets.Enemy);
+            _Texture = contentService.Load<Texture2D>(Data.Graphics.Enemy);
             _Speed = 875;
             _ScreenSize = screenSize;
             _StartPosition = new Vector2(1688, 540);
@@ -62,16 +62,7 @@ namespace Pong.Enemy
         /// <returns></returns>
         public void Collide(ICollider collider)
         {
-            Rectangle topEdge = new Rectangle(BoundingRect.Left, BoundingRect.Top, 1, 1);
-            Rectangle bottomEdge = new Rectangle(BoundingRect.Left, BoundingRect.Bottom, 1, 1);
-            if (collider.BoundingRect.Contains(topEdge))
-            {
-                Position = new Vector2(Position.X, collider.BoundingRect.Bottom + BoundingRect.Height /2);
-            }
-            else if (collider.BoundingRect.Contains(bottomEdge))
-            {
-                Position = new Vector2(Position.X, collider.BoundingRect.Top - BoundingRect.Height / 2);
-            }
+
         }
 
         #endregion

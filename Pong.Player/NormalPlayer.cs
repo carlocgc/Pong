@@ -44,7 +44,7 @@ namespace Pong.Player
 
         public NormalPlayer(IContentService contentService, IRenderService renderService, IUpdateService updateService, IPhysicsService physicsService, IInputService inputService, Vector2 screenSize)
         {
-            _Texture = contentService.Load<Texture2D>(Data.Assets.Player);
+            _Texture = contentService.Load<Texture2D>(Data.Graphics.Player);
             _StartPosition = new Vector2(200, 540 - _Texture.Height / 2);
             Position = _StartPosition;
             _ScreenSize = screenSize;
@@ -65,16 +65,7 @@ namespace Pong.Player
         /// <returns></returns>
         public void Collide(ICollider collider)
         {
-            Rectangle topEdge = new Rectangle(BoundingRect.Left, BoundingRect.Top, 1, 1);
-            Rectangle bottomEdge = new Rectangle(BoundingRect.Left, BoundingRect.Bottom, 1, 1);
-            if (collider.BoundingRect.Contains(topEdge))
-            {
-                Position = new Vector2(Position.X, collider.BoundingRect.Bottom);
-            }
-            else if (collider.BoundingRect.Contains(bottomEdge))
-            {
-                Position = new Vector2(Position.X, collider.BoundingRect.Top - BoundingRect.Height);
-            }
+
         }
 
         #endregion

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Pong.Enemy.Data {
+namespace Pong.UI.Data {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Pong.Enemy.Data {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Assets {
+    internal class Graphics {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Assets() {
+        internal Graphics() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Pong.Enemy.Data {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Pong.Enemy.Data.Assets", typeof(Assets).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Pong.UI.Data.Graphics", typeof(Graphics).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,11 +61,11 @@ namespace Pong.Enemy.Data {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Graphics/paddle.
+        ///   Looks up a localized string similar to Graphics/background.
         /// </summary>
-        internal static string Enemy {
+        internal static string StartScreen {
             get {
-                return ResourceManager.GetString("Enemy", resourceCulture);
+                return ResourceManager.GetString("StartScreen", resourceCulture);
             }
         }
     }

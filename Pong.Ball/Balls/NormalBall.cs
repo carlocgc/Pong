@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Pong.Interfaces.Ball;
 using Pong.Interfaces.Content;
@@ -26,6 +27,12 @@ namespace Pong.Ball.Balls
         private readonly Vector2 _StartPosition;
         /// <summary> Base movement speed </summary>
         private readonly Single _Speed;
+        /// <summary> Sound of the ball colliding </summary>
+        private readonly SoundEffectInstance _ImpactSfx;
+        /// <summary> Sound of the player scoring </summary>
+        private readonly SoundEffectInstance _PlayerScoreSfx;
+        /// <summary> Sound of the enemy scoring </summary>
+        private readonly SoundEffectInstance _EnemyScoreSfx;
         /// <summary> Whether the ball is active/moving </summary>
         private Boolean _Active;
         /// <summary> THe direction the ball is moving </summary>
@@ -56,7 +63,10 @@ namespace Pong.Ball.Balls
 
         public NormalBall(IContentService contentService, IRenderService renderService, IUpdateService updateService, IPhysicsService physicsService, Vector2 screenSize)
         {
-            _Texture = contentService.Load<Texture2D>(Data.Assets.Ball);
+            _ImpactSfx = contentService.Load<SoundEffect>(Data.Sounds.Impact).CreateInstance();
+            _PlayerScoreSfx = contentService.Load<SoundEffect>(Data.Sounds.PlayerScored).CreateInstance();
+            _EnemyScoreSfx = contentService.Load<SoundEffect>(Data.Sounds.EnemyScored).CreateInstance();
+            _Texture = contentService.Load<Texture2D>(Data.Graphics.Ball);
             _ScreenSize = screenSize;
             _Speed = 700f;
             Position = _StartPosition = _ScreenSize / 2;
@@ -75,9 +85,11 @@ namespace Pong.Ball.Balls
         /// <returns></returns>
         public void Collide(ICollider collider)
         {
+            _ImpactSfx.Stop(true);
+            _ImpactSfx.Play();
             Vector2 postColPos = Position;
 
-            // Move ball so it is no longer intersecting and invert its movement direction
+            // Move ball so it is no longer intersecting and set a new direction
 
             if (BoundingRect.Center.Y < collider.BoundingRect.Top) // Ball is above the collider
             {
@@ -95,12 +107,12 @@ namespace Pong.Ball.Balls
             if (BoundingRect.Center.X > collider.BoundingRect.Right) // Ball is on the right side of a collider
             {
                 postColPos = new Vector2(collider.BoundingRect.Right, postColPos.Y);
-                _Direction.X *= -1;
+                _Direction.X = 1;
             }
             else if (BoundingRect.Center.X < collider.BoundingRect.Left) // Ball is on the left side of a collider
             {
                 postColPos = new Vector2(collider.BoundingRect.Left - BoundingRect.Width, postColPos.Y);
-                _Direction.X *= -1;
+                _Direction.X = -1;
             }
 
             Position = postColPos;
@@ -172,6 +184,8 @@ namespace Pong.Ball.Balls
             Single y = Position.Y;
             if (objectBounds.X < 0)
             {
+                _EnemyScoreSfx.Stop(true);
+                _EnemyScoreSfx.Play();
                 for (var index = _GoalListeners.Count - 1; index >= 0; index--)
                 {
                     IBallGoalListener listener = _GoalListeners[index];
@@ -181,6 +195,8 @@ namespace Pong.Ball.Balls
             }
             if (objectBounds.X + objectBounds.Width > screenSize.X)
             {
+                _PlayerScoreSfx.Stop(true);
+                _PlayerScoreSfx.Play();
                 for (var index = _GoalListeners.Count - 1; index >= 0; index--)
                 {
                     IBallGoalListener listener = _GoalListeners[index];

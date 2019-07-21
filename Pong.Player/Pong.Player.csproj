@@ -42,10 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\Assets.Designer.cs">
+    <Compile Include="Data\Graphics.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Assets.resx</DependentUpon>
+      <DependentUpon>Graphics.resx</DependentUpon>
     </Compile>
     <Compile Include="NormalPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -57,9 +57,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Data\Assets.resx">
+    <EmbeddedResource Include="Data\Graphics.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Assets.Designer.cs</LastGenOutput>
+      <LastGenOutput>Graphics.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

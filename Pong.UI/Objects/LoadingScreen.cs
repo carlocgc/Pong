@@ -23,8 +23,8 @@ namespace Pong.UI.Objects
 
         public LoadingScreen(IContentService contentService, IRenderService renderService, IUpdateService updateService)
         {
-            _Screen = contentService.Load<Texture2D>(Data.Assets.StartScreen);
-            _TitleFont = contentService.Load<SpriteFont>(Data.Assets.TitleFont);
+            _Screen = contentService.Load<Texture2D>(Data.Graphics.StartScreen);
+            _TitleFont = contentService.Load<SpriteFont>(Data.Fonts.TitleFont);
 
             _TitleOrigin = new Vector2(960, 540);
             _DisplayDuration = TimeSpan.FromSeconds(5);

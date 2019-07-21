@@ -72,7 +72,9 @@ namespace Pong.Deploy
             _ContentService = _Mediator.RegisterService<IContentService, ContentService>(new ContentService(Content));
             _RenderService = _Mediator.RegisterService<IRenderService, RenderService>(new RenderService(_SpriteBatch));
             _PhysicsService = _Mediator.RegisterService<IPhysicsService, PhysicsService>(new PhysicsService(_UpdateService));
+
             _Mediator.RegisterService<IStateService, StateService>(new StateService(_UpdateService));
+            _Mediator.RegisterService<IMusicService, MusicService>(new MusicService(_ContentService));
 
             _Mediator.RegisterCreator<ILoadingScreen>(() => new LoadingScreen(_ContentService, _RenderService, _UpdateService));
             _Mediator.RegisterCreator<IScoreboard>(() => new Scoreboard(_ContentService, _RenderService, _UpdateService));

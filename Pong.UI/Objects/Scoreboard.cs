@@ -26,7 +26,7 @@ namespace Pong.UI.Objects
 
         public Scoreboard(IContentService contentService, IRenderService renderService, IUpdateService updateService)
         {
-            _Scorefont = contentService.Load<SpriteFont>(Data.Assets.ScoreFont);
+            _Scorefont = contentService.Load<SpriteFont>(Data.Fonts.ScoreFont);
             _PlayerScoreOrigin = new Vector2(800, 50);
             _EnemyScoreOrigin = new Vector2(1120, 50);
             _ScoreDivideOrigin = new Vector2(960, 50);
