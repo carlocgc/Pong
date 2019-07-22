@@ -133,19 +133,19 @@ namespace Pong.Ball.Balls
         /// <returns></returns>
         private Single CalculateDeflection(Single yVector)
         {
-            const Single min = 0.6f;
-            const Single max = 1.2f;
-            const Single diff = max - min;
+            const Single MIN = 0.6f;
+            const Single MAX = 1.2f;
+            const Single DIFF = MAX - MIN;
 
-            Single yProportion = 1 * yVector;
             Single deflectionAmount = 0;
+
             if (yVector > 0)
             {
-                deflectionAmount = diff * yProportion + min;
+                deflectionAmount = DIFF * yVector + MIN;
             }
             else if (yVector < 0)
             {
-                deflectionAmount = diff * yProportion - min;
+                deflectionAmount = DIFF * yVector - MIN;
             }
 
             return deflectionAmount;
