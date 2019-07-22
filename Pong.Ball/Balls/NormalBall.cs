@@ -35,13 +35,15 @@ namespace Pong.Ball.Balls
         private readonly SoundEffectInstance _EnemyScoreSfx;
         /// <summary> Whether the ball is active/moving </summary>
         private Boolean _Active;
-        /// <summary> THe direction the ball is moving </summary>
-        private Vector2 _Direction;
+
         /// <summary> Position of the ball </summary>
         private Vector2 _Position;
 
         /// <summary> Rectangular bounds of the collider </summary>
         public Rectangle BoundingRect { get; private set; }
+
+        /// <summary> THe direction the ball is moving </summary>
+        public Vector2 Direction { get; private set; }
 
         /// <summary> The collision group this collider belongs to, used to only check collisions between particular groups </summary>
         public CollisionGroup CollisionGroup { get; }
@@ -94,25 +96,25 @@ namespace Pong.Ball.Balls
             if (BoundingRect.Center.Y < collider.BoundingRect.Top) // Ball is above the collider
             {
                 Position = new Vector2(postColPos.X, collider.BoundingRect.Top - BoundingRect.Height);
-                _Direction.Y = -1;
+                Direction = new Vector2(Direction.X, -1);
                 return;
             }
             if (BoundingRect.Center.Y > collider.BoundingRect.Bottom) // Ball is below the collider
             {
                 Position = new Vector2(postColPos.X, collider.BoundingRect.Bottom);
-                _Direction.Y = 1;
+                Direction = new Vector2(Direction.X, 1);
                 return;
             }
 
             if (BoundingRect.Center.X > collider.BoundingRect.Right) // Ball is on the right side of a collider
             {
                 postColPos = new Vector2(collider.BoundingRect.Right, postColPos.Y);
-                _Direction.X = 1;
+                Direction = new Vector2(1, Direction.Y);
             }
             else if (BoundingRect.Center.X < collider.BoundingRect.Left) // Ball is on the left side of a collider
             {
                 postColPos = new Vector2(collider.BoundingRect.Left - BoundingRect.Width, postColPos.Y);
-                _Direction.X = -1;
+                Direction = new Vector2(-1, Direction.Y);
             }
 
             Position = postColPos;
@@ -132,8 +134,8 @@ namespace Pong.Ball.Balls
         /// <summary> Start ball behaviour </summary>
         public void Start()
         {
-            _Direction = GetRandomDirection();
-            _Direction.Normalize();
+            Direction = GetRandomDirection();
+            Direction.Normalize();
             _Active = true;
         }
 
@@ -208,12 +210,12 @@ namespace Pong.Ball.Balls
             if (objectBounds.Y < 0)
             {
                 y = 0;
-                _Direction = new Vector2(_Direction.X, _Direction.Y * -1);
+                Direction = new Vector2(Direction.X, Direction.Y * -1);
             }
             else if (objectBounds.Y + objectBounds.Height > screenSize.Y)
             {
                 y = screenSize.Y - objectBounds.Height;
-                _Direction = new Vector2(_Direction.X, _Direction.Y * -1);
+                Direction = new Vector2(Direction.X, Direction.Y * -1);
             }
             Position = new Vector2(x, y);
         }
@@ -223,7 +225,7 @@ namespace Pong.Ball.Balls
         public void Update(GameTime gameTime)
         {
             if (!_Active) return;
-            Position += _Direction * _Speed * (Single)gameTime.ElapsedGameTime.TotalSeconds;
+            Position += Direction * _Speed * (Single)gameTime.ElapsedGameTime.TotalSeconds;
             CheckScreenBounds(BoundingRect, _ScreenSize);
         }
 

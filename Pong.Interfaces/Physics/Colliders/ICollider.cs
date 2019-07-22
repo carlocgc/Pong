@@ -21,6 +21,9 @@ namespace Pong.Interfaces.Physics.Colliders
         /// <summary> The collision group this collider belongs to, used to only check collisions between particular groups </summary>
         CollisionGroup CollisionGroup { get; }
 
+        /// <summary> Direction the collider is moving </summary>
+        Vector2 Direction { get; }
+
         /// <summary>
         /// Cause collision behaviour
         /// </summary>
