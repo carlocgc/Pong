@@ -89,10 +89,10 @@ namespace Pong.Ball.Balls
         {
             _ImpactSfx.Stop(true);
             _ImpactSfx.Play();
+
             Vector2 postColPos = Position;
 
             // Move ball so it is no longer intersecting and set a new direction
-
             if (BoundingRect.Center.Y < collider.BoundingRect.Top) // Ball is above the collider
             {
                 Position = new Vector2(postColPos.X, collider.BoundingRect.Top - BoundingRect.Height);
@@ -117,10 +117,40 @@ namespace Pong.Ball.Balls
                 Direction = new Vector2(-1, Direction.Y);
             }
 
+            Direction = new Vector2(Direction.X, Direction.Y + CalculateDeflection(collider.Direction.Y));
+            if (Direction.Y > 1.2f) Direction = new Vector2(Direction.X, 1.2f);
+            else if (Direction.Y < -1.2f) Direction = new Vector2(Direction.X, -1.2f);
+
             Position = postColPos;
         }
 
         #endregion
+
+        /// <summary>
+        /// Calculate the amount of deflection applied to the ball given a colliders direction and magnitude
+        /// </summary>
+        /// <param name="yVector"></param>
+        /// <returns></returns>
+        private Single CalculateDeflection(Single yVector)
+        {
+            const Single min = 0.6f;
+            const Single max = 1.2f;
+            const Single diff = max - min;
+
+            Single yProportion = 1 * yVector;
+            Single deflectionAmount = 0;
+            if (yVector > 0)
+            {
+                deflectionAmount = diff * yProportion + min;
+            }
+            else if (yVector < 0)
+            {
+                deflectionAmount = diff * yProportion - min;
+            }
+
+            return deflectionAmount;
+        }
+
 
         #region Implementation of IBall
 
