@@ -22,9 +22,16 @@ namespace Pong.Player
 
         private readonly Single _Speed;
 
-        private Vector2 _Direction;
-
         private Vector2 _Position;
+
+        /// <summary> Direction the collider is moving </summary>
+        public Vector2 Direction { get; private set; }
+
+        /// <summary> Bounds of the collider </summary>
+        public Rectangle BoundingRect { get; private set; }
+
+        /// <summary> The collision group this collider belongs to, used to only check collisions between particular groups </summary>
+        public CollisionGroup CollisionGroup { get; }
 
         public Vector2 Position
         {
@@ -35,12 +42,6 @@ namespace Pong.Player
                 BoundingRect = new Rectangle((Int32)_Position.X, (Int32)_Position.Y, _Texture.Width, _Texture.Height);
             }
         }
-
-        /// <summary> Bounds of the collider </summary>
-        public Rectangle BoundingRect { get; private set; }
-
-        /// <summary> The collision group this collider belongs to, used to only check collisions between particular groups </summary>
-        public CollisionGroup CollisionGroup { get; }
 
         public NormalPlayer(IContentService contentService, IRenderService renderService, IUpdateService updateService, IPhysicsService physicsService, IInputService inputService, Vector2 screenSize)
         {
@@ -86,7 +87,7 @@ namespace Pong.Player
 
         public void Update(GameTime gameTime)
         {
-            Position += new Vector2(0, _Direction.Y) * _Speed * (Single)gameTime.ElapsedGameTime.TotalSeconds;
+            Position += new Vector2(0, Direction.Y) * _Speed * (Single)gameTime.ElapsedGameTime.TotalSeconds;
             if (Position.Y < 0) Position = new Vector2(Position.X, 0);
             else if (Position.Y + _Texture.Height > _ScreenSize.Y) Position = new Vector2(Position.X, _ScreenSize.Y - _Texture.Height);
         }
@@ -111,7 +112,7 @@ namespace Pong.Player
 
         public void InputUpdate(Vector2 direction, List<IButtonState> buttons)
         {
-            _Direction = direction;
+            Direction = direction;
         }
 
         #endregion
