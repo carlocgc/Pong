@@ -22,8 +22,6 @@ namespace Pong.Enemy
 
         private Vector2 _Position;
 
-        private Vector2 _Direction;
-
         public Vector2 Position
         {
             get => _Position;
@@ -35,6 +33,9 @@ namespace Pong.Enemy
         }
 
         #region Implementation of ICollider
+
+        /// <summary> Direction the collider is moving </summary>
+        public Vector2 Direction { get; private set; }
 
         /// <summary> Bounds of the collider </summary>
         public Rectangle BoundingRect { get; private set; }
@@ -83,7 +84,7 @@ namespace Pong.Enemy
 
         public void Update(GameTime gameTime)
         {
-            Position += _Direction * _Speed * (Single)gameTime.ElapsedGameTime.TotalSeconds;
+            Position += Direction * _Speed * (Single)gameTime.ElapsedGameTime.TotalSeconds;
             if (BoundingRect.Y < 0) Position = new Vector2(Position.X, BoundingRect.Height / 2);
             else if (BoundingRect.Y + BoundingRect.Height > _ScreenSize.Y) Position = new Vector2(BoundingRect.X, _ScreenSize.Y - BoundingRect.Height);
         }
@@ -114,7 +115,7 @@ namespace Pong.Enemy
         {
             Vector2 direction = position - Position;
             direction.Normalize();
-            _Direction = new Vector2(0, direction.Y);
+            Direction = new Vector2(0, direction.Y);
         }
 
         #endregion
